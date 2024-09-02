@@ -1,0 +1,20 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load static common_tags%}
+<!-- Appointment Popup start -->
+<div id="appointment-only" class="white-popup mfp-hide tp-popup">
+    <div class="tp-popup__body">
+        <div class="h3 c-main">{{ self.title }}</div>
+        <div class="margin-30t c-blue-dark">
+            <p>{{ self.sub_title | safe }}</p>
+            <ul class="tp-check-list tp-check-list--blue-txt">
+                {% for o in self.item_list %}
+                <li>
+                    {{ o.item | safe }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="h4 tp-b-red c-main margin-35t">{{ self.textarea|add_phone:store.store_phone|safe }}</div>
+    </div>
+</div>
+<!-- Appointment Popup end -->

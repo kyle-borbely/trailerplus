@@ -1,0 +1,12 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section">
+    <div class="container">
+        <div class="margin-30b margin-md-70b">
+        <h3 class="h2 c-main w-full t-center">{{ self.title }}</h3>
+        {% if self.sub_title %}
+        <p>{{ self.sub_title }}</p>
+        {% endif %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,18 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="padding-50t padding-20b padding-md-85t padding-md-55b bg-grey">
+    <div class="container">
+        <div class="tp-row">
+            {% for item in self.items %}
+            <div class="tp-col margin-25b">
+                <div class="tp-quote">
+                    <div class="tp-quote__text">
+                        <p>{{ item.review | safe }}</p>
+                    </div>
+                    <span class="tp-quote__author">{{ item.author_name }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

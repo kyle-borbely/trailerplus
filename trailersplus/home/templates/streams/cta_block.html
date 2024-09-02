@@ -1,0 +1,28 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+    <section class="tp-section bg-img">
+        <picture>
+            {% image self.background_image width-1680 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1680 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1680 as image_webp %}
+            <img data-src="{{ image_webp.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </picture>
+        <div class="container z-index t-center">
+            <h2 class="h2-h1 c-white">{{ self.title | safe }}</h2>
+            <div class="tp-banner--sm c-white padding-md-40t">
+                <p>
+                    {{ self.text | safe }}
+                </p>
+            </div>
+            {% if self.button_page %}
+                <a href="{{ self.button_page.url }}" class="tp-btn tp-btn--white tp-btn--t-blue margin-30t margin-md-55t">{{ self.button_text }}</a>
+            {% elif self.button_url %}
+                <a href="{{ self.button_url }}" class="tp-btn tp-btn--white tp-btn--t-blue margin-30t margin-md-55t">{{ self.button_text }}</a>
+            {% endif %}
+        </div>
+    </section>

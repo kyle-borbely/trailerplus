@@ -1,0 +1,54 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+flake8 = "*" # https://pypi.org/project/flake8/
+flake8-docstrings = "*" # https://pypi.org/project/flake8-docstrings/
+mypy = "*" # https://pypi.org/project/mypy/
+black = "==19.10b0" # https://pypi.org/project/black/
+coverage = "~=5.2" # https://pypi.org/project/coverage/
+faker = "*"
+rich = "*"
+
+[packages]
+# Core
+## Django
+django = "~=3.0.8" # https://pypi.org/project/Django/
+djangorestframework = "~=3.11.0" # https://pypi.org/project/djangorestframework/
+django-extensions = "*" # https://pypi.org/project/django-extensions/
+django-modeltranslation = "*" # https://pypi.org/project/django-modeltranslation/
+django-storages = "*" # https://pypi.org/project/django-storages/
+django-environ = "*" # 12 Factors Metodology | https://pypi.org/project/django-environ/
+django-redis = "*" #  Wagtail cache recomendation | https://docs.wagtail.io/en/latest/advanced_topics/performance.html#cache | https://pypi.org/project/django-redis/
+## Wagtail
+wagtail = "==2.10" # https://pypi.org/project/wagtail/
+wagtail-cache = "*" # https://pypi.org/project/wagtail-cache/
+# https://pypi.org/project/wagtail-modeltranslation/
+wagtailmenus = "*" # https://pypi.org/project/wagtailmenus/
+# Utils
+gunicorn = "~=20.0.4" # WSGI Deploy | https://pypi.org/project/gunicorn/
+boto3 = "~=1.14.17" # AWS support  | https://pypi.org/project/boto3/ # ToDo migrate to Nginx
+psycopg2-binary = "*" # PostgreSQL engine | https://pypi.org/project/psycopg2-binary/
+whitenoise = "*" # https://pypi.org/project/whitenoise/
+trustpilot = "*" # https://pypi.org/project/trustpilot/
+requests = "*"
+django-cors-headers = "*"
+python-memcached = "*"
+celery = "~=4.3"
+flower = "*"
+django-celery-results = "*"
+django-celery-beat = "*"
+wagtail-inventory = "*"
+wagtailuiplus = "*"
+wagtailmedia = "*"
+geoip2 = "*"
+django-debug-toolbar = "*"
+wagtail-meta-preview = "*"
+wagtail-modeltranslation = "*"
+ujson = "*"
+authorizenet = "*"
+
+[requires]
+python_version = "3.8"

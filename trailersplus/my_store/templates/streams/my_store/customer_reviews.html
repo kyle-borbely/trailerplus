@@ -1,0 +1,52 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<!-- Customer Reviews start -->
+<section class="tp-section--default bg-grey">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="tp-review-slider">
+                    <div class="tp-review-slider__bg bg-img">
+                        <picture>
+                            {% image self.background_image format-webp as image_webp %}
+                            <source data-srcset="{{image_webp.url}}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image self.background_image format-jpeg as image_jpeg %}
+                            <source data-srcset="{{image_jpeg.url}}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image self.background_image format-jpeg as image_jpeg %}
+                            <img data-src="{{ image_jpeg.url }}" alt="Call today" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                    <h3 class="c-white h3 margin-0t p-relative z-index">{{ self.reviews_title }}</h3>
+                    <div class="tp-review-slider__content">
+                        <div class="tp-swiper tp-swiper--review-2 js-swiper">
+                            <div class="tp-swiper__container swiper-container" data-slides="1" data-simulate_touch="true" data-loop="true" data-speed="1000" data-autoplay="4000">
+                                <div class="swiper-wrapper tp-swiper__wrapper">
+                                    {% for review in self.reviews %}
+                                    <div class="swiper-slide tp-swiper__slide">
+                                        <div class="tp-review tp-review--white">
+                                            <p class="tp-review__text">
+                                                {{ review.review_text }}
+                                            </p>
+                                            <span class="tp-review__author d-block">{{ review.review_author}}</span>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="swiper-pagination tp-swiper__pagination margin-40t"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 offset-lg-1 d-flex align-items-center margin-25t margin-md-60t margin-lg-0t">
+                <div>
+                    <h3 class="h3 margin-15b margin-md-20b">{{ self.about_title }}</h3>
+                    <p class="p-md">
+                        {{ self.about_text }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Customer Reviews end -->

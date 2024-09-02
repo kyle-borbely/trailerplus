@@ -1,0 +1,71 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<section class="tp-section">
+    <div class="container margin-50b">
+        <h2 class="h2 w-full t-center margin-25b margin-md-60b">{{ self.title }}</h2>
+        <div class="tp-swiper tp-swiper--ba js-swiper p-relative">
+            <div class="tp-swiper__container swiper-container" data-slides="1" data-slides_lg="1" data-slides_sm="1" data-simulate_touch="true" data-speed="700" data-touch-ratio="0" data-loop="true">
+                <div class="swiper-wrapper tp-swiper__wrapper">
+                    {% for item in self.items %}
+                    <div class="swiper-slide tp-swiper__slide">
+                        <div class="tp-ba-slider js-ba-slider">
+                            <div class="tp-ba-slider__wrapper js-wrapper">
+                                <div class="tp-ba-slider__before js-before">
+                                    <!-- after img here -->
+                                    <picture>
+                                        {% image item.image_after width-1170 format-webp as image_webp %}
+                                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        {% image item.image_after width-1170 format-jpeg as image_jpeg %}
+                                        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        {% image item.image_after width-1170 as img %}
+                                        <img data-src="{{ img.url }}" alt="logo" class="lazyload content-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" draggable="false">
+                                    </picture>
+                                </div>
+                                <div class="tp-ba-slider__after js-after">
+                                    <!-- before img here -->
+                                    <picture>
+                                        {% image item.image_before width-1170 format-webp as image_webp %}
+                                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        {% image item.image_before width-1170 format-jpeg as image_jpeg %}
+                                        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        {% image item.image_before width-1170 as img %}
+                                        <img data-src="{{ img.url }}" alt="logo" class="lazyload content-image" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" draggable="false">
+                                    </picture>
+                                </div>
+                                <div class="tp-ba-slider__scroller js-scroller">
+                                    <div class="tp-ba-slider__scroller-text tp-ba-slider__scroller-text--before">
+                                        {{ self.text_button_before }}
+                                    </div>
+                                    <div class="scroller__thumb">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </div>
+                                    <div class="tp-ba-slider__scroller-text tp-ba-slider__scroller-text--after">
+                                        {{ self.text_button_after }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="swiper-button-prev tp-swiper__prev"></div>
+            <div class="swiper-button-next tp-swiper__next"></div>
+            <div class="swiper-pagination tp-swiper__pagination"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="tp-color-container">
+            {% for o in self.slider_tables %}
+            <div class="row">
+                {% for ii in o.slider_row %}
+                <div class="col-12 col-md-4">{{ ii.slider_item_title }}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

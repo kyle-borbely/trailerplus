@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section {% if self.background_color_grey %}bg-grey{% endif %}">
+    <div class="container margin-0b margin-md-50b margin-lg-65b">
+        <h2 class="h2 t-center">{{ self.title }}</h2>
+    </div>
+    <div class="tp-swiper tp-swiper--recent js-swiper ">
+        <div class="tp-swiper__container swiper-container" data-slides="3" data-slides_sm="2" data-simulate_touch="true" data-loop="true" data-centeredSlides="true" data-speed="700" data-spaces="30" data-spaces_md="0">
+            <div class="swiper-wrapper tp-swiper__wrapper">
+                {% for work in self.works %}
+                <div class="swiper-slide tp-swiper__slide">
+                    <div class="tp-swiper__image bg-img">
+                        <picture>
+                            {% image work.image width-575 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image work.image width-575 format-jpeg as image_jpeg %}
+                            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image work.image width-575 format-webp as img %}
+                            <img data-src="{{ img.url }}" alt="{{ work.image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                    {% if work.link %}
+                    <a href="{{ work.link }}">
+                        <h3 class="h3 tp-link--arrow tp-swiper__link">{{ work.link_title }}</h3>
+                    </a>
+                    {% else %}
+                    <p>
+                        <h3 class="h3">{{ work.link_title }}</h3>
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination tp-swiper__pagination"></div>
+            <div class="swiper-button-prev tp-swiper__prev"></div>
+            <div class="swiper-button-next tp-swiper__next"></div>
+        </div>
+    </div>
+</section>

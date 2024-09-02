@@ -1,0 +1,41 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+<section class="tp-section bg-grey">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 t-center">
+                <h2 class="h2">{{ self.title }}</h2>
+                <p class="margin-30t">
+                    {{ self.sub_title | safe }}
+                </p>
+                <form action="#" class="tp-form tp-form--shadow tp-form--padding margin-40t" id="custom-trailer-cf">
+                    {% csrf_token %}
+                    <div class="tp-form-triple">
+                        <div class="tp-form-control">
+                            <input type="text" name="name" minlength="3" placeholder="{{ self.placeholder_name }}" required="required">
+                        </div>
+                        <div class="tp-form-control">
+                            <input type="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="{{ self.placeholder_email }}" required="required">
+                        </div>
+                        <div class="tp-form-control">
+                            <input type="number" name="zip" min="0" placeholder="{{ self.placeholder_zipcode }}">
+                        </div>
+                    </div>
+                    <div class="tp-form-control">
+                        <textarea name="description" minlength="10" placeholder="{{ self.placeholder_description }}" required="required"></textarea>
+                    </div>
+                    <div class="tp-form-msg t-center">
+                        <div class="tp-form-msg__text tp-form-msg__text--success margin-30t">{{ self.success_message }}</div>
+                        <div class="tp-form-msg__text tp-form-msg__text--error margin-30t"></div>
+                    </div>
+                    <div class="margin-30t">
+                        <button type="submit" class="tp-btn tp-btn--red tp-btn--large">
+                            <span>{{ self.button_text }}</span>
+                            <div class="tp-btn__loader"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,12 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static common_tags%}
+<section class="padding-45t padding-45b padding-md-80t padding-md-80b">
+    <div class="container">
+        <h2 class="h3 c-main">{{ self.title}}</h2>
+        <ul class="tp-check-list tp-check-list--dark-txt">
+            {% for bullet in self.bullets %}
+            <li>{{ store.store_name|one_more:store.state|add_store:bullet|locations_count:location_count }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>

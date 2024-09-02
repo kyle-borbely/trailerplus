@@ -1,0 +1,29 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="c-blue-dark padding-sm-0b padding-md-35b padding-45t padding-md-75t">
+    <div class="container">
+        <div class="row margin-50b">
+            <div class="col-12 col-lg-10 offset-lg-1">
+                <h2 class="h4">{{ self.title }}</h2>
+                {% if self.sub_title %}
+                <p>{{ self.sub_title | safe }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-lg-10 offset-lg-1">
+                <div class="row">
+                    {% for o in self.list_blocks %}
+                    <div class="col-md-6 margin-50b">
+                        <h3 class="h4">{{ o.title }}</h3>
+                        <ul class="tp-check-list">
+                            {% for ii in o.list_items %}
+                            <li>{{ ii.item | safe }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

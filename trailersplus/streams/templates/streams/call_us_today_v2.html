@@ -1,0 +1,30 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="bg-pomegranate c-white tp-cut-red">
+    <div class="container p-relative">
+        <div class="tp-cut-red__img">
+            <picture>
+                {% image self.image width-166 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image self.image width-166 format-png as image_png %}
+                <source data-srcset="{{ image_png.url }}" type="image/png" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image self.image width-166 as img %}
+                <img data-src="{{ img.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-9 col-lg-6 col-xl-4 offset-xl-2 margin-30b margin-lg-0b">
+                <div class="__text">
+                    <h2 class="h4 c-white">{{ self.title }}</h2>
+                    <h3 class="h3 c-white">{{ self.sub_title | safe }}</h3>
+                </div>
+            </div>
+            <div class="col-12 col-md-9 col-lg-6 col-xl-5 offset-xl-1">
+                <ul class="tp-check-list tp-check-list--white tp-check-list--small">
+                    {% for item in self.items %}
+                    <li>{{ item.item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

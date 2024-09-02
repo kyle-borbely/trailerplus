@@ -1,0 +1,10 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section bg-alter">
+    <div class="container t-center">
+        <h2 class="h2 c-white br-sm">{{ self.title | safe }}</h2>
+        <a href="{{ self.button_link }}" class="tp-btn tp-btn--lg tp-btn--grey margin-5t margin-md-10t">{{ self.button_text | safe }}
+            <i class="icon ion-md-arrow-forward"></i>
+        </a>
+    </div>
+</section>

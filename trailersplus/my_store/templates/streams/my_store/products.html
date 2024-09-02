@@ -1,0 +1,51 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% load product_tags checkout_tags common_tags %}
+<!-- Producs start -->
+<section class="padding-45t padding-20b padding-md-80t padding-lg-75t padding-md-55b bg-grey">
+    <div class="container">
+        <h2 class="h2 t-center margin-25b margin-md-60b">{{ products_count|one_more:store.get_city_name|my_store_product_title:self.title }}, {{ store.state }}</h2>
+        <div class="row justify-content-lg-center justify-content-xl-start">
+            {% for category, count, pictures, min_price, description in products%}
+            <div class="col-md-6 col-lg-5 col-xl-3 margin-30b ">
+                <a href="{{ category }}/" class="tp-product tp-product--shadow">
+                    <div class="tp-product__image">
+                        <div class="tp-swiper tp-swiper--product js-swiper">
+                            <div class="tp-swiper__container swiper-container" data-slides="1" data-loop="true" data-speed="500">
+                                <div class="swiper-wrapper tp-swiper__wrapper">
+                                    {% for picture in pictures %}
+                                    <div class="swiper-slide tp-swiper__slide bg-img">
+                                        <picture>
+                                            <!--<source data-srcset="./img/webp/products/product1.webp" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                                            <!--<source data-srcset="./img/products/product1.jpg" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                                            <img data-src="{{products_image_path}}/{{ picture }}" alt="Factory Direct" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                        </picture>
+                                    </div>
+                                    {% empty %}
+                                        <div class="swiper-slide tp-swiper__slide bg-img">
+                                            <picture>
+                                                <img data-src="{{ products.image_path }}/comingsoon.jpg" alt="Factory Direct" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                            </picture>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="swiper-button-prev tp-swiper__prev"></div>
+                                <div class="swiper-button-next tp-swiper__next"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tp-product__info">
+                        <span class="tp-product__status tp-product__status--number"><b>{{ count }}</b> {{ self.in_stock }}</span>
+                        <h3 class="h5 margin-0t margin-0b c-main">{{ description }}</h3>
+                        <!-- TODO If product has MSRP price need to add span(after span with price) with class "old" <span class="old">MSRP: $7999</span> -->
+                        <div class="tp-product__price tp-product__price--low">
+                            {{ self.as_low_as }}: <span class="low">{{ min_price|str_price }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Producs end -->

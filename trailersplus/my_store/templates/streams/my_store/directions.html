@@ -1,0 +1,55 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% load product_tags %}
+<!-- Direction start -->
+<section class="bg-grey">
+    <div class="container p-relative padding-50t padding-50b padding-md-85t padding-md-85b">
+        <div class="tp-location__buttons">
+            <a href="inventory/" class="tp-btn tp-btn--md tp-btn--red tp-btn--view">
+                <span>{{ self.view_inventory }}</span>
+            </a>
+            <a href="#direction-popup" class="tp-btn tp-btn--md tp-btn--red tp-btn--direction js-popup">
+                <span>{{ self.get_directions}}</span>
+            </a>
+        </div>
+        <div class="row margin-md-25t">
+            <div class="col-lg-7">
+                <div class="tp-location__info">
+                    <div class="tp-location__info-col">
+                        <h2 class="tp-location__name">
+                            {{ store.store_name }}
+                        </h2>
+                        <address class="tp-location__address">
+                            {{ store.store_address }}
+                            <br>
+                            {{ store.store_city }}, {{ store.state }} {{ store.store_zip }} <br>
+                            Phone:
+                            <a href="tel:+1{{ store.store_phone }}">{{ store.store_phone }}</a>
+                        </address>
+                    </div>
+                    <div class="tp-location__info-col">
+                        <div class="tp-location__schedule margin-md-5t">
+                            <h3 class="h4">{{ self.store_hours }}</h3>
+                            <!-- TODO "CLOSED" must be uppercase -->
+                            <table>
+                                <tbody>
+                                    {{ store.work_hours|group_work_hours }}
+                                </tbody>
+                            </table>
+                            <p class="margin-20t">
+                                <a href="#appointment-only" class="js-popup">{{ self.learn_why_appointment }}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="tp-location__map">
+                    <div class="tp-map js-simple-map" data-lat="{{ store.store_lat }}" data-lng="{{ store.store_long }}" data-zoom="15" data-fullscreen_control="true" data-scrollwheel="true" data-marker="{% static 'img/logo-img50.svg' %}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Direction end -->
+

@@ -1,0 +1,40 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="tp-section tp-section--default tp-safety-list bg-img">
+    <picture>
+        {% image self.background_image width-1900 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1900 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1900 as img %}
+        <img data-src="{{ img.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container">
+        <h2 class="h3 c-white margin-50b">{{ self.title }}</h2>
+        <div class="tp-safety-list__wrapper">
+            {% for item in self.items %}
+            <div class="tp-safety-list__item">
+                <span>
+                    <picture>
+                        {% image item.icon width-36 format-webp as image_webp %}
+                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.icon width-36 format-png as image_png %}
+                        <source data-srcset="{{ image_png.url }}" type="image/png" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.icon width-36 as img %}
+                        <img data-src="{{ img.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </span>
+                <div class="tp-safety-list__description">
+                    <h3 class="h4 c-white">{{ item.title }}</h3>
+                    {% if item.textarea %}
+                    <p class="c-white">{{ item.textarea | safe }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

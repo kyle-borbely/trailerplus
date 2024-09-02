@@ -1,0 +1,69 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static product_tags common_tags %}
+<section class="tp-sale-baner bg-img bg-img--x">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 as image_webp %}
+        <img data-src="{{ image_webp.url }}" alt="{{ image_webp.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container p-relative z-index">
+        <div class="tp-sale-baner__box">
+            <div class="tp-sale-baner__left">
+                <h1 class="h2 c-white">
+                    {{ self.title | locations_count:location_count | safe }}
+                </h1>
+                <p class="c-white margin-0t">{{ self.textarea | safe }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner slider end -->
+<section class="tp-section--filter">
+    <div class="container">
+        <div class="tp-sale-baner__box">
+            <div class="tp-sale-baner__left"></div>
+            <div class="tp-sale-baner__right">
+                <div class="tp-s-filter tp-s-filter--vert tp-skew tp-skew--blue-l tp-skew--border tp-skew--shadow">
+                    <div class="h3 c-white t-center">{{ self.search_title }}</div>
+                    <form action="/submit/" class="tp-s-filter__form margin-20t">
+                        <div class="tp-s-filter__options">
+                            <div class="tp-s-filter__item tp-s-filter__item--type">
+                                <select name="trailer-type" id="js-for-sale-type">
+                                    <option value="all">{{ "All Types"|translate }}</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.slug }}">{% if locale == 'es' %}{{ category.name_es }}{% else %}{{ category.name_en }}{% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="tp-s-filter__item tp-s-filter__item--store">
+                                <select name="trailer-store" id="js-for-sale-city">
+                                    <optgroup label="My Store">
+                                        <option value="{{ request.location.city }}">{{ request.location.city_name }}, {{ request.location.state }}</option>
+                                    </optgroup>
+                                    {% for state, stores in locations %}
+                                    <optgroup label="{{ state }}">
+                                        {% for store in stores %}
+                                        <option value="{{ store.city }}">{{ store.city_name }}, {{ store.state }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="tp-btn tp-btn--red tp-btn--full margin-20t">{{ self.search_button_text }}</button>
+                    </form>
+                    <div class="tp-s-filter__stat t-center margin-20t js-s-filter__stat">
+                        <span>{{ request.location.count }}</span> {{ self.search_count_text }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

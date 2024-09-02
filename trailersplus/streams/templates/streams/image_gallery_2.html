@@ -1,0 +1,46 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="padding-45t padding-md-75t padding-md-10b bg-grey">
+    <div class="container tp-ig-block">
+        <div id="{{ self.block_id }}" class="margin-30b margin-md-70b">
+            {% if self.main_title %}
+            <h2 class="h2 t-center margin-40b margin-md-60b br-sm">{{ self.main_title }}</h2>
+            {% endif %}
+            {% if self.main_sub_title %}
+            <p>{{ self.main_sub_title | safe }}</p>
+            {% endif %}
+        </div>
+        {% if self.title %}
+        <h3 class="h3 t-center margin-40b margin-md-60b br-sm">{{ self.title | safe }}</h3>
+        {% endif %}
+        <div class="tp-about-columns  tp-about-columns--large-img  ">
+            {% for item in self.items %}
+            <div class="tp-about-columns__col">
+                <div class="tp-about-columns__img bg-img">
+                    <picture>
+                        {% image item.image width-500 format-webp as image_webp %}
+                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.image width-500 format-jpeg as image_jpeg %}
+                        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.image width-500 as img %}
+                        <img data-src="{{ img.url }}" alt="item" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </div>
+                <h4 class="h4 c-main">{{ item.caption }}</h4>
+                <div class="tp-about-columns__text">
+                    {{ item.sub_caption | safe }}
+                </div>
+            </div>
+            {% endfor %}
+            {% if self.scroll_button_text %}
+            <div class="w-full t-center margin-50b margin-md-85b">
+                {% if self.scroll_button_link %}
+                <a href="{{ self.scroll_button_link }}" class="tp-btn tp-btn--red">{{ self.scroll_button_text }}</a>
+                {% else %}
+                <p>{{ self.scroll_button_text }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

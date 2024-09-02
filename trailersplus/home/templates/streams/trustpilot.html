@@ -1,0 +1,56 @@
+{% load review_tags %}
+<section class="tp-section tp-sum-rating {% if self.is_my_store_page %}margin-lg-35t margin-xl-65{% endif %} {% if self.background_grey_color %}bg-grey{% endif %}">
+    {% if not self.columns_layout %}
+        <div class="container p-relative t-center tp-sum-rating__wrapper">
+            {% if self.title %}
+                <h2 class="h2">{{ self.title}}</h2>
+            {% endif %}
+            {% if self.sub_title %}
+                <h3 class="h2">{{ self.sub_title|safe }}</h3>
+            {% endif %}
+            <div class="tp-large-rating margin-40t">
+                <div class="tp-large-rating__count">{{ self.rating }}</div>
+                <div class="tp-large-rating__stars-wrapper">
+                    <div class="tp-large-rating__stars">
+                        {% for fill in self.rating|stars_generator %}
+                            <div class="tp-large-rating__star">
+                                <i class="fa fa-star"></i>
+                                <div class="fill" style="width: {{ fill }}">
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="container p-relative t-center tp-sum-rating__wrapper2">
+            <div>
+                {% if self.title %}
+                <h2 class="h2">{{ self.title}}</h2>
+                {% endif %}
+                    <div class="tp-large-rating margin-20b margin-lg-0b">
+                        <div class="tp-large-rating__count">{{ self.rating }}</div>
+                        <div class="tp-large-rating__stars-wrapper">
+                            <div class="tp-large-rating__stars">
+                                {% for fill in self.rating|stars_generator %}
+                                <div class="tp-large-rating__star">
+                                    <i class="fa fa-star"></i>
+                                    <div class="fill" style="width: {{ fill }}">
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div>
+                {% if self.sub_title %}
+                    <h3 class="h2">{{ self.sub_title|safe }}</h3>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</section>

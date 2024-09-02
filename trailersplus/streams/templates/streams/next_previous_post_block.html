@@ -1,0 +1,41 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<section class="padding-50t padding-50b padding-md-85b tp-blog-details">
+<div class="container c-blue-dark">
+<div class="tp-post-navigation padding-50t">
+    <div class="tp-post-navigation__post tp-post-navigation__post--prev">
+        <a href="{{ page.next_sibling.url }}" class="tp-post-navigation__img-wrapper">
+            <picture>
+                {% image page.next_sibling.specific.post_preview_image width-170 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image page.next_sibling.specific.post_preview_image width-170 format-webp as image_webp %}
+                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image page.next_sibling.specific.post_preview_image width-170 as img %}
+                <img data-src="{{ img.url }}" alt="alt" class="lazyload tp-img--shadow" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+        </a>
+        <div class="tp-post-navigation__post-desc">
+            <a href="{{ page.next_sibling.url }}" class="tp-post-navigation__link">{{ self.next_text_button }}</a>
+            <a href="{{ page.next_sibling.url }}" class="c-main h4">{{ page.next_sibling }}</a>
+        </div>
+    </div>
+    <div class="tp-post-navigation__post tp-post-navigation__post--next">
+        <a href="{{ page.prev_sibling.url }}" class="tp-post-navigation__img-wrapper">
+            <picture>
+                {% image page.prev_sibling.specific.post_preview_image width-170 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image page.prev_sibling.specific.post_preview_image width-170 format-webp as image_webp %}
+                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image page.prev_sibling.specific.post_preview_image width-170 as img %}
+                <img data-src="{{ img.url }}" alt="alt" class="lazyload tp-img--shadow" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+        </a>
+        <div class="tp-post-navigation__post-desc">
+            <a href="{{ page.prev_sibling.url }}" class="tp-post-navigation__link">{{ self.previous_text_button }}</a>
+            <a href="{{ page.prev_sibling.url }}" class="c-main h4">{{ page.prev_sibling }}</a>
+        </div>
+    </div>
+</div>
+</div>
+</section>

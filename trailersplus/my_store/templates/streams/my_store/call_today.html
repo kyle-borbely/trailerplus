@@ -1,0 +1,47 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<!-- Call Today start -->
+<section class="tp-cut-red c-white p-relative">
+    <div class="bg-sect bg-img">
+        <picture>
+            {% image self.background_image width-1920 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 as image_webp %}
+            <img data-src="{{ image_webp.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </picture>
+    </div>
+    <div class="container p-relative">
+        <div class="tp-cut-red__img">
+            <picture>
+                {% image self.somewhy_happy_guy_image width-166 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image self.somewhy_happy_guy_image width-166 format-jpeg as image_jpeg %}
+                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image self.somewhy_happy_guy_image width-166 format-jpeg as image_jpeg %}
+                <img data-src="{{ image_jpeg.url }}" alt="Call today" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-9 col-lg-6 col-xl-4 offset-xl-2 margin-30b margin-lg-0b">
+                <div class="__text">
+                    <h2 class="h4 c-white">{{ self.title}}</h2>
+                    <h3 class="h3 c-white">{{ self.call_today }} <a class="fw700 c-white" href="tel:+1{{ store.store_phone }}">{{ store.store_phone }}</a></h3>
+                </div>
+            </div>
+            <div class="col-12 col-md-9 col-lg-6 col-xl-5 offset-xl-1">
+                <ul class="tp-check-list tp-check-list--white-txt tp-check-list--small">
+                    {% for point in self.points %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Call Today end -->

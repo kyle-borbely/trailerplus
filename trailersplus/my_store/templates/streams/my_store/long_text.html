@@ -1,0 +1,18 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static product_tags common_tags%}
+<!-- Text info start -->
+<section class="tp-section">
+    <div class="container tp-text">
+        {{ store.get_city_name|one_more:store.get_state_display|add_store:self.text|add_phone:store.store_phone|safe }}
+        {% if locale == 'es' %}
+            <p>
+            {{ store.store_spanish_directions|safe }}
+            </p>
+        {% else %}
+            <p>
+            {{ store.store_directions|safe }}
+            </p>
+        {% endif %}
+    </div>
+</section>
+<!-- Text info end -->

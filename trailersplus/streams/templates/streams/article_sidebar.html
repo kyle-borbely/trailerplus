@@ -1,0 +1,48 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<div class="tp-section tp-warranty">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-xl-8">
+                <article>
+                    <h1>{{ self.article_title }}</h1>
+                    {{ self.article_text | safe }}
+                </article>
+            </div>
+            <div class="col-sm-12 col-xl-4">
+                {% for o in self.addresses %}
+                <h2 class="h3 c-main">{{ o.title }}</h2>
+                <div class="tp-warranty__addresses-wrapper">
+                    {% for ii in o.items %}
+                    <address>
+                        {{ ii.address }}
+                    </address>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+                <div class="tp-warranty__manuals">
+                    {% for o in self.manuals %}
+                    <h3>{{ o.title }}</h3>
+                    <div class="tp-warranty__manual-list">
+                        {% for ii in o.items %}
+                        <div class="tp-warranty__manual-item">
+                            <picture>
+                                {% image ii.image width-95 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-95 format-png as image_png %}
+                                <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-95 as img %}
+                                <img data-src="{{ img.url }}" alt="logo" class="lazyload tp-warranty__manual-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            </picture>
+                            <div class="tp-warranty__manual-wrapper">
+                                <a href="{{ ii.button_link }}" class="tp-warranty__manual-link">{{ ii.text }}</a>
+                                <a href="{{ ii.button_link }}" class="tp-warranty__manual-btn">{{ ii.button_text | safe }}</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

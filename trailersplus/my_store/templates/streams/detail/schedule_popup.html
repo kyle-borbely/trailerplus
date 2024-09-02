@@ -1,0 +1,78 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load static product_tags %}
+<!-- Schedule Popup start -->
+<div id="schedule" class="white-popup mfp-hide tp-popup tp-popup--schedule">
+    <div class="tp-popup__body">
+        <div>
+            <div class="h3">{{ self.form_title }}</div>
+            <p class="fz15 lh26">
+                {{ self.form_description | safe }}
+            </p>
+            <form action="#" class="tp-form margin-30t margin-md-50t" id="schedule-cf">
+                {% csrf_token %}
+                <div class="tp-form-control">
+                    <input type="text" name="first_name" minlength="3" placeholder="{{ self.placeholder_first_name }}" required="required">
+                </div>
+                <div class="tp-form-control">
+                    <input type="text" name="last_name" minlength="3" placeholder="{{ self.placeholder_last_name }}" required="required">
+                </div>
+                <div class="tp-form-control">
+                    <input type="tel" name="phone" placeholder="{{ self.placeholder_phone }}" required="required">
+                </div>
+                <div class="tp-form-control">
+                    <input type="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="{{ self.placeholder_email }}" required="required">
+                </div>
+                <div class="tp-form-control">
+                    <input type="checkbox" name="accept" class="js-accept" id="schedule-accept" required="required">
+                    <label for="schedule-accept" class="fz15">{{ self.policy_accept | safe }}
+                    </label>
+                </div>
+                <div class="tp-form-msg t-center">
+                    <div class="tp-form-msg__text tp-form-msg__text--success margin-30t">{{ self.success_message }}</div>
+                    <div class="tp-form-msg__text tp-form-msg__text--error margin-30t"></div>
+                </div>
+                <input type="hidden" name="trailer" value="{{ product.common.vin }}" />
+                <div class="margin-30t margin-md-50t">
+                    <button type="submit" class="tp-btn tp-btn--red tp-btn--full">
+                        <span>{{ self.button_text }}</span>
+                        <div class="tp-btn__loader"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="tp-popup__banner-wrapper">
+        <div class="tp-popup__banner bg-img">
+            <picture>
+                <!--<source data-srcset="./img/webp/product-single/img-banner.webp" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                <source data-srcset="./img/product-single/img-banner.jpg" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                {% if product.common.pictures %}
+                    {% with product.common.pictures|first as picture %}
+                    <img data-src="{{ image_path }}/{{ picture.file }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% endwith %}
+                {% else %}
+                    <img data-src="{{ image_path }}/comingsoon.jpg" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% endif %}
+            </picture>
+            <div class="tp-popup__banner-info">
+                <div class="h4 c-white">{{ product.trans.short_description|extend_title:product.common.vin }}</div>
+                <span class="h5 d-block margin-15t c-white">
+                    <strong>VIN</strong>{{ product.common.vin }}</span>
+            </div>
+        </div>
+        <div class="tp-popup__banner-additional">
+            <div class="h3 c-main">{{ self.appointment_right_title }}</div>
+            <div class="margin-10t c-blue-dark fz15 lh26">
+                <p>{{ self.appointment_right_description | safe }}</p>
+                <ul class="tp-check-list tp-check-list--small tp-check-list--blue-txt">
+                    {% for item in self.appointment_right_list %}
+                    <li>
+                        {{ item.list_item | safe }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Schedule Popup end -->

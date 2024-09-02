@@ -1,0 +1,47 @@
+{% load wagtailcore_tags wagtailimages_tags common_tags %}
+{% load static %}
+
+<section class="tp-section">
+    <div class="container t-center">
+        <p class="h3 c-main">{{ self.h3_title|locations_count:location_count|safe }}</p>
+        <h1 class="h1 c-main">{{ self.h1_title }}</h1>
+    </div>
+    <div class="tp-locator margin-30t margin-md-70t">
+        <div class="tp-locator__box">
+            <div class="tp-locator__map">
+                <div class="tp-map js-main-map" data-url="{% static 'js/map-data.json' %}" data-lat="46.4331626" data-lng="-116.9808372" data-zoom="15" data-fullscreen_control="true" data-scrollwheel="true" data-marker="{% static 'img/logo-img50.svg' %}">
+                </div>
+            </div>
+            <div class="tp-locator__locations">
+                <div class="h3 c-main">{{ self.find_stores_text }}</div>
+                <div class="tp-locator__current">
+                    <i class="fa fa-map-marker"></i>
+                    <span class="tp-locator__current-title">{{ self.my_stores_text }}</span>
+                    <span class="tp-locator__current-name">{{ request.location.city_name}}, {{ request.location.state }}</span>
+                </div>
+                <ul class="tp-locator__list js-map-categories">
+                {% if request.GET.state is None %}
+                {% for state, stores in locations %}
+                    <li class="js-marker-toggle {% if request.location.full_state|lower == state|lower %}active{% endif %}" data-category="{{ state }}">{{ state }}</li>
+                {% endfor %}
+                {% else %}
+                {% for state, stores in locations %}
+                    <li class="js-marker-toggle {% if request.GET.state|lower|hyphen_to_space == state|lower %}active{% endif %}" data-category="{{ state }}">{{ state }}</li>
+                {% endfor %}
+                {% endif %}
+                </ul>
+                <div class="tp-s-filter__item tp-s-filter__item--map">
+                    <select name="store-locations" id="store-locations" class="js-locations-select">
+                        {% for state, stores in locations %}
+                        <option value="{{ state }}">{{ state }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="container margin-20t margin-md-40t">
+            <div class="tp-locator__stores js-locator-stores"></div>
+        </div>
+    </div>
+</section>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxO2Bw0GxAbVKZrd5yYiKwS2iFVSHDkO8"></script>

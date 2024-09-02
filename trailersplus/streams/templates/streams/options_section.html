@@ -1,0 +1,28 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="tp-section tp-financing-options">
+    <div class="container">
+        <div class="row">
+            <h2 class="h2 t-center w-full">{{ self.title }}</h2>
+        </div>
+        <div class="row">
+            {% for option in self.options %}
+            <div class="col-sm-12 col-md-12 col-lg-4">
+                <div class="tp-financing-options__column">
+                    <div class="tp-financing-options__image-wrapper">
+                        <picture>
+                            {% image option.icon width-52 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image option.icon width-52 format-png as image_png %}
+                            <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image option.icon width-52 as img %}
+                            <img data-src="{{ img.url }}" alt="models we offer" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                    <h3 class="h4 margin-10b">{{ option.title }}</h3>
+                    <p>{{ option.textarea | safe }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

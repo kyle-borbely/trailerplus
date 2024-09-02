@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+
+{% block content %}
+<div class="main-wrapp-inner">
+    {% for block in page.content %}
+        {% include_block block %}
+    {% endfor %}
+</div>
+{% endblock content %}
+{% block script %}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxO2Bw0GxAbVKZrd5yYiKwS2iFVSHDkO8"></script>
+{% endblock %}
+<section class="tp-section">
+    <div class="container">
+        <h1 class="h3 c-main">Reserve this Trailer for 7 Days with a Refundable $50 Deposit</h1>
+        <form action="/" method="post">
+            <div id="checkout" class="tp-checkout margin-30t margin-md-50t">
+                <div class="tp-checkout__left">
+                    <div class="tp-checkout__head">
+                        <div class="tp-checkout__step js-step active" data-index="1">
+                            <div class="tp-checkout__step-done"><i class="ion-md-checkmark"></i></div>
+                            <div class="tp-checkout__step-number">1</div>
+                            <div class="tp-checkout__step-title">
+                                Customer info
+                            </div>
+                        </div>
+                        <div class="tp-checkout__step-line"></div>
+                        <div class="tp-checkout__step js-step" data-index="2">
+                            <div class="tp-checkout__step-done"><i class="ion-md-checkmark"></i></div>
+                            <div class="tp-checkout__step-number">2</div>
+                            <div class="tp-checkout__step-title">
+                                Payment
+                            </div>
+                        </div>
+                        <div class="tp-checkout__step-line"></div>
+                        <div class="tp-checkout__step js-step" data-index="3">
+                            <div class="tp-checkout__step-done"><i class="ion-md-checkmark"></i></div>
+                            <div class="tp-checkout__step-number">3</div>
+                            <div class="tp-checkout__step-title">
+                                Confirmation
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tp-checkout__form-box margin-80t js-content-box">
+                        <div class="tp-checkout__form margin-40b margin-md-50b active js-content" data-index="1">
+                            <div action="#" class="tp-form">
+                                <div class="tp-form-double tp-form-double--lg">
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" name="firstname" class="js-space-check" minlength="3" placeholder="First Name *" required>
+                                    </div>
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" name="lastname" class="js-space-check" minlength="3" placeholder="Last Name *" required>
+                                    </div>
+                                </div>
+                                <div class="tp-form-double tp-form-double--lg">
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" name="company" placeholder="Company">
+                                    </div>
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="tel" name="phone" placeholder="Phone *" pattern=".{14,15}" required>
+                                    </div>
+                                </div>
+                                <div class="tp-form-control tp-form-control--lg">
+                                    <input type="email" name="email" pattern="^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" placeholder="Email Address *" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tp-checkout__form margin-40b margin-md-50b js-content" data-index="2">
+                            <div class="tp-form">
+                                <div class="tp-form-control tp-form-control--lg">
+                                    <input type="text" name="address" minlength="5" class="js-space-check" placeholder="Billing Address *" aria-label="Billing address" required>
+                                </div>
+                                <div class="tp-form-triple tp-form-triple--lg">
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" name="city" placeholder="City *" class="js-space-check" aria-label="Billing city" required>
+                                    </div>
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" name="state" placeholder="State *" class="js-space-check" aria-label="Billing state" required>
+                                    </div>
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="number" name="zip" class="js-zip-code" placeholder="Zip Code *" min="0" aria-label="Billing zip code" required>
+                                    </div>
+                                </div>
+                                <div class="tp-form-triple tp-form-triple--special tp-form-triple--lg">
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" name="cardnumber" class="js-card-input" placeholder="Card Number *" aria-label="Card Number" required>
+                                    </div>
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="number" name="ccv" placeholder="CCV Code *" class="js-ccv-input" max="9999" aria-label="CCV Code" autocomplete="off" required>
+                                    </div>
+                                    <div class="tp-form-control tp-form-control--lg">
+                                        <input type="text" class="form-control js-expirity" name="expirity" placeholder="Expiry (MM/YY) *" aria-label="Card expiry" autocomplete="off" maxlength="5" minlength="5" required>
+                                    </div>
+                                </div>
+                                <div class="tp-form-control tp-form-control--lg d-flex align-items-center">
+                                    <input type="checkbox" name="accept" id="payment-checkbox" required>
+                                    <label for="payment-checkbox">I accept the</label><a href="/returns-policy/" class="fz14" target="_blank">return/refund policy</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tp-checkout__confirm margin-40b margin-md-50b js-content" data-index="3">
+                            <div class="row js-confirmation-info"></div>
+                        </div>
+                    </div>
+                    <div class="tp-checkout__buttons">
+                        <button type="button" class="tp-btn tp-btn--grey tp-btn--back js-checkout-back" disabled><i class="ion-md-arrow-round-back"></i>Back</button>
+                        <button type="button" class="tp-btn tp-btn--blue tp-btn--next js-checkout-next">Continue<i class="ion-md-arrow-round-forward"></i></button>
+                        <button type="submit" class="tp-btn tp-btn--blue js-checkout-pay d-none">Pay now</button>
+                    </div>
+                    <div class="tp-checkout__errors margin-30t d-none js-checkout-errors">
+                        <p class="error">Please fill in all fields correctly</p>
+                    </div>
+                </div>
+                <div class="tp-checkout__right">
+                    <div class="tp-checkout__product">
+                        <div class="tp-checkout__product-img bg-img">
+                            <picture>
+                                <source data-srcset="./img/webp/product-single/img-1.webp" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                <source data-srcset="./img/product-single/img-1.jpg" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                <img data-src="./img/product-single/img-1.jpg" alt="alt" class="lazyload js-print-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            </picture>
+                        </div>
+                        <div class="tp-checkout__product-body">
+                            <p class="h4 c-main margin-15b">6 X 12 Carry-On Tandem Axle Utility Trailer</p>
+                            <div class="d-flex align-items-center">
+                                <div class="tp-price tp-price--sm fw500">Sale Price: <span>$4829*</span></div>
+                                <div class="tp-price tp-price--old tp-price--sm ml-5">MSRP: $9130</div>
+                            </div>
+                            <div class="tp-product-info__text margin-10t">
+                                <p>Financing Available from <b><strong>$85.16/mo.</strong></b></p>
+                            </div>
+                            <p class="tp-checkout__product-note">*Sales Tax Will be Charged Depending on Local Regulations</p>
+                        </div>
+                        <div class="tp-checkout__product-footer">
+                            <p>Free in store pickup. Free delivery within 5 miles of the store where the trailer is located.</p>
+                            <div class="tp-product-info__location margin-25t margin-md20t">
+                                <i class="fa fa-map-marker c-main"></i>
+                                <span class="fz14">Trailer Located at:</span>
+                                <div class="tp-located-at">
+                                    <span class="tp-located-at__toggle js-located-at"><strong class="fz14">TrailersPlus Lavonia</strong></span>
+                                    <div class="tp-located-at__box">
+                                        <div class="tp-located-at__map">
+                                            <div class="tp-map js-simple-map" data-lat="36.6512961" data-lng="-119.7101225" data-zoom="15" data-fullscreen_control="true" data-scrollwheel="true" data-marker="./img/logo-img50.svg"></div>
+                                            <a href="#" class="tp-btn tp-btn--text-sm tp-btn--red tp-btn--direction">
+                                                <span>Get Direction</span>
+                                            </a>
+                                        </div>
+                                        <div class="tp-located-at__info">
+                                            <div class="tp-loc-info-item">
+                                                <i class="fa fa-map-marker"></i>
+                                                <div>
+                                                    TrailersPlus Fresno 5847<br>
+                                                    Toyota Ave Fresno, CA 93725
+                                                </div>
+                                            </div>
+                                            <div class="tp-loc-info-item">
+                                                <i class="fa fa-phone"></i>
+                                                <div>
+                                                    <a href="tel:+1661-335-6045">661-335-6045</a>
+                                                </div>
+                                            </div>
+                                            <div class="tp-loc-info-item">
+                                                <i class="fa fa-clock-o"></i>
+                                                <div>
+                                                    <table>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Mon:</td>
+                                                                <td>Closed</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Tue-Sat:</td>
+                                                                <td>Set Appointment</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Sun:</td>
+                                                                <td>Closed</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tp-checkout__product-cta">
+                            <i class="fa fa-truck" aria-hidden="true"></i>
+                            Call us for a shipping quote <a href="tel:+12813973344">281-397-3344</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

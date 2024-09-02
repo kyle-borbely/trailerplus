@@ -1,0 +1,50 @@
+{% load static product_tags%}
+<!-- Get Direction Popup start -->
+<div id="direction-popup" class="white-popup mfp-hide tp-popup">
+    <div class="tp-popup__body">
+        <div class="tp-direct-popup">
+            <div class="tp-direct-popup__logo">
+                <img src="{% static 'img/logo-img50.svg' %}" alt="City Name">
+                {{ store.store_name }}
+            </div>
+            <div class="row margin-30t">
+                <div class="col-md-6">
+                    <div>
+                        <img src="{% static 'img/icons/google-maps.png' %}" alt="Google maps">
+                    </div>
+                    <a href="{{ store.store_map_url }}" class="tp-btn tp-btn--red tp-btn--md margin-10t" target="_blank" rel="noopener">{{ self.go_to_google_maps }}</a>
+                </div>
+                <div class="col-md-6">
+                    <div class="margin-20t">
+                        <div class="tp-loc-info-item">
+                            <i class="fa fa-map-marker"></i>
+                            <div>
+                                {{ store.store_name }} <br> {{ store.store_address }}
+                                {{ store.get_state_display }} {{ store.store_zip }}
+                            </div>
+                        </div>
+                        <div class="tp-loc-info-item">
+                            <i class="fa fa-phone"></i>
+                            <div>
+                                <a href="tel:+1{{ store.store_phone }}">{{ store.store_phone }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tp-direct-popup__info margin-25t margin-md-35t">
+                <span class="h4 c-main">{{ self.directions }}</span>
+                {% if locale == 'es' %}
+                    <p>
+                        {{ store.store_spanish_directions|safe }}
+                    </p>
+                {% else %}
+                    <p>
+                        {{ store.store_directions|safe }}
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Get Direction Popup end -->

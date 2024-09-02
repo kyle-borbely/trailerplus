@@ -1,0 +1,46 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section tp-contact-us">
+    <div class="container">
+        <h1 class="h2 c-main">{{ self.title }}</h1>
+        <p>{{ self.sub_title | safe }}</p>
+        <h3 class="h4 c-main">{{ self.phone | safe }}</h3>
+        <div class="tp-divider margin-50t margin-50b"></div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                {% for cl in self.column_left %}
+                <h2 class="h3 c-main">{{ cl.title }}</h2>
+                <address class="margin-30b">
+                    <b>{{ cl.sub_title | safe }}</b>
+                    <span>{{ cl.textarea | safe }}</span>
+                </address>
+                <div class="tp-contact-us__socials">
+                    {% for ii in cl.social_links %}
+                    <div class="tp-contact-us__social-wrapper">
+                        <a href="{{ ii.link }}" target="_blank"><span class="tp-contact-us__social-icon tp-contact-us__{{ ii.icon_class }}"><i class="{{ ii.icon }}"></i></span></a>
+                        <a href="{{ ii.link }}" target="_blank">{{ ii.title }}</a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-6">
+                {% for cr in self.column_right %}
+                    <h2 class="h3 c-main">{{ cr.title }}</h2>
+                    {% for o in cr.rows %}
+                        <div class="row">
+                            {% for ii in o.text_block %}
+                            <div class="col-12 col-sm-6 col-md-6 {% if forloop.counter != 4 %}margin-30b{% endif %}">
+                                <address>
+                                    <b>{{ ii.title }}</b>
+                                    <span>{{ ii.textarea | safe }}</span>
+                                </address>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

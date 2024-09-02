@@ -1,0 +1,37 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<section class="tp-section tp-banner tp-banner--bot tp-banner--600 tp-banner--overl-{{ self.overlay }} bg-img tp-banner--logo-large">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 as image_webp %}
+        <img data-src="{{ image_webp.url }}" alt="{{ image_webp.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container c-white t-center">
+        <h1 class="h1 c-white margin-10t margin-0b br-lg {% if self.float_left %}t-left{% endif %}">{{ self.title }}</h1>
+        {% if self.sub_title %}
+        <h2 class="h3 c-white margin-20t">{{ self.sub_title | safe }}</h2>
+        {% endif %}
+        {% if self.textarea %}
+        <p class="c-white margin-20t br-sm">{{ self.textarea | safe }}</p>
+        {% endif %}
+    </div>
+    <div class="tp-banner__logo">
+        <picture>
+            {% image self.bottom_logo width-138 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.bottom_logo width-138 format-png as image_png %}
+            <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.bottom_logo width-138 as img %}
+            <img data-src="{{ img.url }}" alt="models we offer" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </picture>
+    </div>
+</section>
+

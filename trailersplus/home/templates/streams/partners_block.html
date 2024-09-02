@@ -1,0 +1,17 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+<section class="tp-partners">
+    <div class="container">
+        <div class="row">
+            {% for partner in partners %}
+            <div class="tp-partners__item col-6 col-sm-4 col-md-4 col-lg-2 justify-content-center d-flex align-items-center">
+                {% if partner.partner_link %}<a href="{{ partner.partner_link }}" target="_blank">{% endif %}
+                    <picture>
+                        {% image partner.partner_image width-153 as img %}
+                        <img data-src="{{ img.url }}" alt="{{ partner.partner_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

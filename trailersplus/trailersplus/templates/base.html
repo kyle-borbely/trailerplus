@@ -1,0 +1,106 @@
+{% load wagtailuserbar menus_tags %}
+{% load static%}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+    <head>
+        <script>
+            {% if store is not None %}
+                favlocation = {location_id: "{{ store.store_id }}" }
+            {% else %}
+                favlocation = {location_id: "{{ request.location.id }}" }
+            {% endif %}
+        </script>
+        {{ settings.site_settings.AdditionalHtml.head_code|safe }}
+        <meta charset="utf-8" />
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex" />
+        <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+        <title>
+            {% block title %}
+                {% if custom_title|default:False %}
+                    {{ custom_title }}
+                {% elif self.seo_title|default:False %}
+                    {{ self.seo_title }}
+                {% else %}
+                    {{ self.title }}
+                {% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name|default:False as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="" />
+
+
+        {# Global stylesheets #}
+        <link rel="dns-prefetch" href="{% static 'fonts.googleapis.com' %}" />
+        <link href="https://fonts.gstatic.com" crossorigin rel="preconnect" />
+        <link href="{% static '/fonts/font-awesome/fontawesome-webfont.woff2' %}" crossorigin>
+        <link href="{% static '/fonts/ion-icons/ionicons.woff2' %}" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="prefetch" as="font">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/fonts.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.min.css' %}">
+    </head>
+
+    <body class="{% block body_class %}{% endblock %}">
+        {{ settings.site_settings.AdditionalHtml.body_code|safe }}
+        <div class="main-wrapp">
+            {% include 'includes/header.html' %}
+            {% wagtailuserbar %}
+
+            {% block content %}{% endblock %}
+
+            {% include 'includes/footer.html' %}
+            {# Global javascript #}
+
+            <script async src="{% static 'js/libs/lazysizes.min.js' %}"></script>
+            <script defer src="{% static 'js/libs/libs.min.js' %}"></script>
+            <script defer src="{% static 'js/libs/jquery-ui.min.js' %}"></script>
+            <script defer src="{% static 'js/checkout.js' %}"></script>
+            <script defer src="{% static 'js/script.js' %}"></script>
+            <script defer src="{% static 'js/libs/livechat.js' %}"></script>
+            <script defer src="{% static 'js/product-page.js' %}"></script>
+            <script> (function() {
+                var s = document.createElement('script'),
+                    e = !document.body ? document.querySelector('head') : document.body;
+                s.src = 'https://acsbap.com/apps/app/assets/js/acsb.js';
+                s.async = s.defer = true;
+                s.onload = function() {
+                    acsbJS.init({
+                        statementLink: '',
+                        feedbackLink: '',
+                        footerHtml: '',
+                        hideMobile: false,
+                        hideTrigger: false,
+                        language: 'en',
+                        position: 'right',
+                        leadColor: '#146FF8',
+                        triggerColor: '#146FF8',
+                        triggerRadius: '50%',
+                        triggerPositionX: 'right',
+                        triggerPositionY: 'bottom',
+                        triggerIcon: 'default',
+                        triggerSize: 'medium',
+                        triggerOffsetX: 20,
+                        triggerOffsetY: 20,
+                        mobile: {
+                            triggerSize: 'small',
+                            triggerPositionX: 'right',
+                            triggerPositionY: 'center',
+                            triggerOffsetX: 0,
+                            triggerOffsetY: 0,
+                            triggerRadius: '50%'
+                        }
+                    });
+                };
+                e.appendChild(s);
+            }());</script>
+            {% block script %}{% endblock %}
+        </div>
+    </body>
+</html>

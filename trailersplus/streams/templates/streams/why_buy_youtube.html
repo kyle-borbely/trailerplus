@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section bg-img">
+                <picture>
+                    {% image self.background_image width-1900 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.background_image_mobile width-450 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.background_image width-1900 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.background_image width-1900 as img %}
+                    <img data-src="{{ img.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+                <div class="container">
+                    <h2 class="h2 c-white t-center margin-10b margin-md-20b">
+                        {{ self.title }}
+                    </h2>
+                    <div class="tp-row">
+                        {% for item in self.items %}
+                        <div class="margin-30t margin-md-50t tp-col">
+                            <div class="tp-videos__image bg-img">
+                                <picture>
+                                    {% image item.image_preview width-560 format-webp as image_webp %}
+                                    <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                    {% image item.image_preview width-560 format-jpeg as image_jpeg %}
+                                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                    {% image item.image_preview width-560 as img %}
+                                    <img data-src="{{ img.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                </picture>
+                                <a href="{{ item.youtube_link }}" class="tp-btn tp-btn--play tp-btn--play-small js-popup" data-type="iframe" aria-label="Open video"></a>
+                            </div>
+                            <h3 class="h4 c-white">{{ item.title }}</h3>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>

@@ -1,0 +1,29 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section tp-section--default tp-community-slider">
+    <div class="container p-relative">
+        <div class="tp-swiper js-swiper p-relative">
+            <div class="tp-swiper__container swiper-container" data-slides="3" data-slides_lg="2" data-slides_sm="1" data-loop="true" data-autoplay="4000" data-simulate_touch="true" data-speed="700" data-spaces="50" data-spaces_md="30">
+                <div class="swiper-wrapper tp-swiper__wrapper">
+                    {% for item in self.items %}
+                    <div class="swiper-slide tp-swiper__slide">
+                        <picture>
+                            {% image item.image width-355 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-355 format-jpeg as image_jpeg %}
+                            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-355 as img %}
+                            <img data-src="{{ img.url }}" alt="our team" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                        <h4 class="h4 c-main margin-10b">{{ item.title }}</h4>
+                        <p class="margin-0">{{ item.textarea | safe }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="swiper-button-prev tp-swiper__prev"></div>
+            <div class="swiper-button-next tp-swiper__next"></div>
+            <div class="swiper-pagination tp-swiper__pagination"></div>
+        </div>
+    </div>
+</section>

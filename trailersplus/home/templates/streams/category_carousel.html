@@ -1,0 +1,32 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static common_tags%}
+<section class="tp-section tp-section--cat">
+    <div class="container tp-cat-title">
+        <h2 class="h2 t-center">{{ self.title | safe }}</h2>
+    </div>
+    <div class="tp-swiper tp-swiper--category js-swiper">
+        <div class="tp-swiper__container swiper-container" data-slides="5" data-slides_lg="4" data-slides_md="3" data-slides_sm="2" data-simulate_touch="true" data-loop="true" data-centeredSlides="true" data-speed="700" data-initial_slide="3">
+            <div class="swiper-wrapper tp-swiper__wrapper">
+                {% for item in self.items %}
+                <div class="swiper-slide tp-swiper__slide">
+                    <h3 class="h3 tp-swiper__title">{{ item.category_title }}</h3>
+                    <div class="tp-swiper__content">
+                        <picture>
+                            <a href="{{ item.page_link|location_slug:request.location.slug }}">
+                                {% image item.image width-450 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image item.image width-450 format-png as image_png %}
+                                <img data-src="{{ image_png.url }}" alt="{{ item.image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            </a>
+                        </picture>
+                        <a href="{{ item.page_link|location_slug:request.location.slug }}" class="tp-btn tp-btn--sm tp-btn--red tp-swiper__btn">{{ item.button_text }}</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination tp-swiper__pagination"></div>
+            <div class="swiper-button-prev tp-swiper__prev"></div>
+            <div class="swiper-button-next tp-swiper__next"></div>
+        </div>
+    </div>
+</section>

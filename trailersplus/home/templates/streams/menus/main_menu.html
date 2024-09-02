@@ -1,0 +1,61 @@
+{% load wagtailcore_tags wagtailimages_tags common_tags %}
+<nav class="tp-nav tp-nav--main js-main-nav">
+    <ul class="tp-nav__list">
+        {% for o in self.menus %}
+        <li>
+            <a href="{{ o.menu_page.url }}">{{ o.menu_title }}</a>
+            {% if o.menu_items|length %}
+            <span class="tp-nav__toggle js-submenu-toggle"></span>
+            <div class="js-submenu">
+                <ul>
+                    {% for ii in o.menu_items %}
+                    <li {% if ii.special_class %}class="special"{% endif %}>
+                        {% if ii.link_url is not None %}
+                        <a href="{{ ii.link_url }}">
+                            <picture>
+                                {% image ii.image width-1080 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-1080 format-png as image_png %}
+                                <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-1080 format-webp as image_webp %}
+                                <img data-src="{{ image_webp.url }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="alt">
+                            </picture>
+                            <span>{{ ii.title }}</span>
+                        </a>
+                        {% elif ii.link_page is not None %}
+                        <a href="{{ ii.link_page.url }}">
+                            <picture>
+                                {% image ii.image width-1080 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-1080 format-png as image_png %}
+                                <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-1080 format-webp as image_webp %}
+                                <img data-src="{{ image_webp.url }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="alt">
+                            </picture>
+                            <span>{{ ii.title }}</span>
+                        </a>
+                        {% else %}
+                        <a href="#">
+                            <picture>
+                                {% image ii.image width-1080 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-1080 format-png as image_png %}
+                                <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image ii.image width-1080 format-webp as image_webp %}
+                                <img data-src="{{ image_webp.url }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="alt">
+                            </picture>
+                            <span>{{ ii.title }}</span>
+                        </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
+        <div class="tp-nav__close-bot js-nav-close">{{ self.close_menu_button_text }}</div>
+
+</nav>

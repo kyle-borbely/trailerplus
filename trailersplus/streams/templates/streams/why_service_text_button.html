@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="tp-section tp-section--default bg-img">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 as image_webp %}
+        <img data-src="{{ image_webp.url }}" alt="{{ image_webp.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container d-flex flex-column flex-md-row justify-content-md-between align-items-center text-mobile-center">
+        <h2 class="h3--large-mobile c-white margin-20b margin-md-0b text-center text-md-left">{{ self.title }}</h2>
+        <a href="{{ self.button_link }}" class="tp-btn tp-btn--red tp-btn--medium-max tp-btn--icon tp-btn--shadow">
+            <i class="{{ self.button_icon }}"></i>
+            {{ self.button_text }}
+        </a>
+    </div>
+</section>

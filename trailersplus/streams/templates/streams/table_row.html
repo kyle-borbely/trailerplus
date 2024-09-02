@@ -1,0 +1,16 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<section class="tp-section">
+    <div class="container">
+        <div class="tp-color-container">
+            {% for o in self.tables %}
+            <div class="row">
+                {% for ii in o.row %}
+                <div class="col-12 col-md-4">{{ ii.item_title }}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

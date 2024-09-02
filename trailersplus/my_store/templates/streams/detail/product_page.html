@@ -1,0 +1,396 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load static %}
+{% load product_tags review_tags%}
+<!-- Product info block start -->
+<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxO2Bw0GxAbVKZrd5yYiKwS2iFVSHDkO8"></script>-->
+<section class="padding-30t padding-20b padding-md-50t padding-md-60b">
+    <!--<iframe class="d-none" name="print_frame" width="0" height="0" src="about:blank"></iframe>-->
+    <div class="container">
+        <div class="tp-product-head">
+            <div class="tp-product-head__back">
+                <a href="{{ request.scheme }}://{{ request.site_name }}/{{ store_slug }}/inventory/" class="tp-link tp-link--back">{{ self.back_to_inventory_text | safe }}</a>
+            </div>
+            <div class="tp-product-head__pagin">
+                <div class="tp-pagination">
+                    <ul>
+                        <li>
+                            <a href="{{ request.scheme }}://{{ request.site_name }}/{{ store_slug }}/">
+                                {{ store.store_name }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ request.scheme }}://{{ request.site_name }}/{{ store_slug }}/{{ product.common.category.slug }}">
+                                {{ product.common.category.description }}
+                            </a>
+                        </li>
+                        <li>
+                            {{ product.common.vin }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="tp-product-head__btns">
+                <!-- TODO mail link -->
+                <a href="mailto:?subject={{ store.store_name }} - {{ product.trans.short_description|extend_title:product.common.vin }}&body=https://{{ request.site_name }}{{ request.get_full_path }}" class="tp-btn tp-btn--xs tp-btn--text-sm tp-btn--grey">
+                    <i class="fa fa-envelope-o"></i>
+                    <span>{{ self.mail_text }}</span>
+                </a>
+                <button class="tp-btn tp-btn--xs tp-btn--text-sm tp-btn--grey js-product-print">
+                    <i class="fa fa-print"></i>
+                    <span>{{ self.print_text }}</span>
+                </button>
+            </div>
+        </div>
+        <h1 class="h3 margin-20t margin-25b margin-md-30t margin-md-30b">{{ product.trans.short_description|extend_title:product.common.vin }}</h1>
+        <div class="row">
+            <div class="col-lg-7 col-xl-8">
+                <div class="tp-product-gallery d-flex">
+                    <div class="tp-product-gallery__left d-none d-xl-block">
+                        <div class="tp-swiper tp-swiper--prod-vertical js-swiper">
+                            <div class="swiper-container tp-swiper__container" data-slides="5" data-slides_lg="4" data-speed="500" data-direction="vertical" data-simulate_touch="1" data-mousewheel="1" data-spaces="10">
+                                <div class="swiper-wrapper tp-swiper__wrapper">
+                                    {% for image in product.common.pictures %}
+                                    <div class="swiper-slide tp-swiper__slide">
+                                        <div class="bg-img">
+                                            <picture>
+                                                <!--<source data-srcset="./img/webp/product-single/small/img-1.webp" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                                                <!--<source data-srcset="./img/product-single/small/img-1.jpg" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                                                <img data-src="{{ image_path }}/{{ image.file }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                            </picture>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+                                    <div class="swiper-slide tp-swiper__slide">
+                                        <div class="bg-img">
+                                            <picture>
+                                                <img data-src="{{ image_path }}/comingsoon.jpg" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                            </picture>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tp-product-gallery__right">
+                        {% if product.common.status == 120 %}
+                            <span class="tp-product-gallery__status">{{ self.trailers_reserved }}</span>
+                        {% endif %}
+                        {% if product.common.status == 150 %}
+                            <span class="tp-product-gallery__status">{{ self.trailers_sold }}</span>
+                        {% endif %}
+                        <div class="tp-swiper tp-swiper--product tp-swiper--prod-horizontal js-swiper">
+                            <div class="swiper-container tp-swiper__container" data-slides="1" data-thumbs="1" data-speed="400" data-autoheight="true" data-autoplay="4000">
+                                <div class="swiper-wrapper tp-swiper__wrapper">
+                                    {% for image in product.common.pictures %}
+                                    <div class="swiper-slide tp-swiper__slide bg-img">
+                                        <picture>
+                                            <!--<source srcset="./img/webp/product-single/img-1.webp" type="image/webp">-->
+                                            <!--<source srcset="./img/product-single/img-1.jpg" type="image/jpeg">-->
+                                            <img src="{{ image_path }}/{{ image.file }}" alt="alt" class="lazyload js-print-img">
+                                        </picture>
+                                    </div>
+                                    {% empty %}
+                                    <div class="swiper-slide tp-swiper__slide bg-img">
+                                        <picture>
+                                            <img src="{{ image_path }}/comingsoon.jpg" alt="alt" class="lazyload js-print-img">
+                                        </picture>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="swiper-button-prev tp-swiper__prev"></div>
+                            <div class="swiper-button-next tp-swiper__next"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-xl-4 margin-20t margin-lg-0t">
+                <div class="tp-product-info">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-12">
+                            <div class="d-flex align-items-center justify-content-center justify-content-md-start">
+                                <div class="js-print">
+                                    <div class="tp-price">{{ self.sale_price_text }}
+                                        <span>{{ product.common.sale_price|str_price }}</span></div>
+                                </div>
+                                <a href="#found-lower" class="d-none d-md-inline-block tp-link tp-link--lower text-uppercase ml-20 margin-md-10t js-popup">{{ self.found_it_lower_text }}</a>
+                            </div>
+                            <div class="js-print">
+                                <div class="d-flex align-items-center margin-5t justify-content-center justify-content-md-start">
+                                    <div class="tp-price tp-price--old">MSRP: {{ product.common.msrp|str_price }}</div>
+                                    <a href="#found-lower" class="d-md-none tp-link tp-link--lower text-uppercase ml-20 margin-md-10t js-popup">{{ self.found_it_lower_text }}</a>
+                                </div>
+                            </div>
+                            <div class="js-print">
+                                <div class="tp-product-info__getoff margin-20t">
+                                    {% if store.state != 'OR' %}
+                                    {% with product.common.sale_price|off_formula:product.common.calculated_cash_price as off_price %}
+                                        {% if off_price > 0 %}
+                                            <strong>{{ self.get_off_sale_text|off_text_template:off_price }}</strong>
+                                        {% endif %}
+                                    {% endwith %}
+                                    {% endif %}
+                                </div>
+                                <div class="tp-product-info__text margin-10t">
+                                    <p>
+                                        {{ self.financing_available_text | safe }}
+                                        <b>${{ product.common.calculated_cash_price|formula }}/mo.</b>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-12">
+                            <a href="#schedule" class="tp-btn tp-btn--red tp-btn--sm-hor margin-20t d-block js-popup">{{ self.schedule_an_appointment_button_text }}</a>
+                            {% if product.common.status == 100 %}
+                            <div class="tp-double-btn margin-20t">
+                                <a href="/checkout" class="tp-btn js-reserv-btn tp-btn--grey js-popup">
+                                    {{ self.reserve_trailer_button_text }}
+                                </a>
+                                <a href="#reserve-trailer" class="tp-btn tp-btn--grey js-popup">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                            </div>
+                            <a href="#" id="js-to-cart-btn" class="tp-btn js-to-cart-btn margin-20t d-block">{{ self.add_to_cart_button_text }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="js-print">
+                        <div class="tp-product-info__location margin-25t margin-md20t">
+                            <i class="fa fa-map-marker"></i>
+                            {{ self.trailer_located_at_text }}
+                            <div class="tp-located-at">
+                                <span class="tp-located-at__toggle js-located-at">{{ store.store_name }}</span>
+                                <div class="tp-located-at__box">
+                                    <div class="tp-located-at__map">
+                                        <div class="tp-map js-simple-map" data-lat="36.6512961" data-lng="-119.7101225" data-zoom="15" data-fullscreen_control="true" data-scrollwheel="true" data-marker="./img/logo-img50.svg"></div>
+                                        <a href="#" class="tp-btn tp-btn--text-sm tp-btn--red tp-btn--direction">
+                                            <span>{{ self.get_direction_text }}</span>
+                                        </a>
+                                    </div>
+                                    <div class="tp-located-at__info">
+                                        <div class="tp-loc-info-item">
+                                            <i class="fa fa-map-marker"></i>
+                                            <div>
+                                                {{ store.store_name }} <br> {{ store.store_address }}
+                                                {{ store.get_state_display }} {{ store.store_zip }}
+                                            </div>
+                                        </div>
+                                        <div class="tp-loc-info-item">
+                                            <i class="fa fa-phone"></i>
+                                            <div>
+                                                <a href="tel:+1{{ store.store_phone }}">{{ store.store_phone }}</a>
+                                            </div>
+                                        </div>
+                                        <div class="tp-loc-info-item">
+                                            <i class="fa fa-clock-o"></i>
+                                            <div>
+                                                <table>
+                                                    <tbody>
+                                                        {{ store.work_hours|group_work_hours }}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="tp-product-info__add-info">
+                            {{ self.free_delivery_text | safe }}
+                            <a href="tel:+1{{ store.store_phone }}">{{ store.store_phone }}</a>
+                        </p>
+                        <p class="fz15 margin-20t">
+                            <a href="#appointment-only" class="js-popup">
+                                <b>
+                                    {{ self.why_we_are_appointment_text }}
+                                </b>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="js-print">
+            <div class="margin-20t margin-20b margin-md-50t margin-md-40b">
+                <p>{{ product.trans.long_description|safe }}</p>
+            </div>
+        </div>
+        <div class="tp-tabs js-tabs">
+            <div class="tp-tabs__head">
+                <ul class="tp-tabs__list">
+                    <!-- first item must to have "active class" -->
+                    <li class="tp-tabs__list-item active">
+                        <p class="tp-tabs__list-link js-tab-link">{{ self.specifications_text }}</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="tp-tabs__content">
+                <!-- first item must to have "active class" -->
+                <div class="tp-tabs__box js-tab-box active">
+                    <div class="row margin-md-10b">
+                        <div class="col-lg-6">
+                            <div class="margin-30b js-print">
+                                <h4 class="h5 h5--18-sm c-main">{{ self.trailer_details_text }}</h4>
+                                <ul class="tp-details">
+                                    <li>
+                                        <span class="tp-details__l">{{ self.color_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.color }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.size_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.short_description }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.tires_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.tires }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.coupler_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.coupler_size }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">Vin#:</span>
+                                        <span class="tp-details__r">{{ product.common.vin }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="margin-30b js-print">
+                                <h4 class="h5 h5--18-sm c-main">{{ self.features_text }}</h4>
+                                <ul class="tp-details">
+                                    <li>
+                                        <span class="tp-details__l">{{ self.clearance_lights_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.clearance_lights }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.tail_lights_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.tail_lights }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.undercoating_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.protected_undercarriage }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="margin-30b js-print">
+                                <h4 class="h5 h5--18-sm c-main">{{ self.dimensions_text }}</h4>
+                                <ul class="tp-details">
+                                    <li>
+                                        <span class="tp-details__l">{{ self.overall_length_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.overall_length|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.overall_width_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.overall_width|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.overall_height_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.overall_height|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.interior_length_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.interior_length|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.interior_width_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.interior_width|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.interior_height_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.interior_height|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.rear_door_height_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.rear_door_height|calculate_dimensions }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.rear_door_width_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.rear_door_width|calculate_dimensions }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="margin-30b js-print">
+                                <h4 class="h5 h5--18-sm c-main">{{ self.axles_and_brakes_text }}</h4>
+                                <ul class="tp-details">
+                                    <li>
+                                        <span class="tp-details__l">GVWR:</span>
+                                        <span class="tp-details__r">{{ product.common.gvwr|title |title}} lbs.</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.empty_weight_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.empty_weight }} lbs.</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.suspensions_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.suspension }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.brakes_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.brakes }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="margin-30b js-print">
+                                <h4 class="h5 h5--18-sm c-main">{{ self.construction_text }}</h4>
+                                <ul class="tp-details">
+                                    <li>
+                                        <span class="tp-details__l">{{ self.frame_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.frame }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.frame_centers_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.frame_centers }}"</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.wall_centers_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.common.wall_centers }}"</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.flooring_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.floor}}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.walls_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.side_walls}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="margin-30b js-print">
+                                <h4 class="h5 h5--18-sm c-main">{{ self.nationwide_warranty_text }}</h4>
+                                <ul class="tp-details">
+                                    <li>
+                                        <span class="tp-details__l">{{ self.overall_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.warranty }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.roof_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.roof_warranty }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.axles_text|title }}:</span>
+                                        <span class="tp-details__r">{{ product.trans.axle_warranty }}</span>
+                                    </li>
+                                    <li>
+                                        <span class="tp-details__l">{{ self.tires_warranty_text|title }}:</span>
+                                        <span class="tp-details__r">{{ self.tires_url_text|safe }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Product info block end -->

@@ -1,0 +1,26 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="padding-10b padding-lg-85b padding-50t padding-lg-85t tp-about-desc bg-porcelain">
+    <div class="container tp-about-desc--text-right">
+        <div class="row flex-lg-row-reverse">
+            <div class="col-sm-12 col-lg-6">
+                <div class="tp-about-desc__text">
+                    <h2 class="c-main">{{ self.title }}</h2>
+                    <p>{{ self.text | safe }}</p>
+                </div>
+            </div>
+            <div class="col-sm-12 col-lg-6 d-flex align-items-center">
+                <div class="tp-about-desc__image-wrapper bg-img margin-30t margin-lg-0t">
+                    <picture>
+                        {% image self.image width-600 format-webp as image_webp %}
+                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image self.image width-600 format-jpeg as image_jpeg %}
+                        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.image_before width-600 as img %}
+                        <img data-src="{{ img.url }}" alt="Tire Warranty" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

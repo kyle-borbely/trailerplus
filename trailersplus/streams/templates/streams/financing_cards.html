@@ -1,0 +1,48 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="tp-section tp-benefits bg-img">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 as image_webp %}
+        <img data-src="{{ image_webp.url }}" alt="{{ image_webp.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container">
+        <h2 class="h2 c-white t-center margin-sm-0t margin-sm-70b margin-30b margin-md-60b">{{ self.title }}</h2>
+        <div class="tp-benefits__blocks-wrapper">
+            {% for card in self.cards %}
+            <div class="tp-benefits__block">
+                <div class="tp-benefits__block-image">
+                    <picture>
+                        {% image card.image width-250 format-webp as image_webp %}
+                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image card.image width-250 format-png as image_png %}
+                        <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image card.image width-250 as img %}
+                        <img data-src="{{ img.url }}" alt="models we offer" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </div>
+                {% if card.caption %}
+                <div class="tp-benefits__block-text">{{ card.caption | safe }}</div>
+                {% endif %}
+                <a href="{{ card.button_link }}" target="_blank" class="tp-btn tp-btn--red">{{ card.button_text }}</a>
+            </div>
+            {% endfor %}
+        </div>
+        <h3 class="h3 c-white t-center margin-sm-70t margin-30t margin-md-60t margin-30b margin-md-50b">{{ self.benefits_title }}</h3>
+        <div class="tp-benefits__list-wrapper">
+            {% for o in self.benefits %}
+            <ul class="tp-benefits__list">
+                {% for ii in o.items_list %}
+                <li>{{ ii.item }}</li>
+                {% endfor %}
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+</section>

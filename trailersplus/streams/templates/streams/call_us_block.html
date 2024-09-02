@@ -1,0 +1,7 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<div class="tp-blog-details__cut margin-50t margin-50b t-center">
+    <h2 class="h3">{{ self.text }}</h2>
+    <h3 class="h2">{{ self.sub_text | safe }}</h3>
+</div>

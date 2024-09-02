@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<div class="col-12 col-xl-4">
+    {% for banner in self.banners %}
+    <div class="tp-sidebar-banner__wrapper tp-sidebar-banner__wrapper--right margin-50t margin-xl-0t">
+        <div class="tp-sidebar-banner bg-img">
+            <picture>
+                {% image banner.image width-350 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image banner.image width-350 format-jpeg as image_jpeg %}
+                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image banner.image width-350 as img %}
+                <img data-src="{{ img.url }}" alt="{{ banner.image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+            <div class="tp-sidebar-banner__subtitle">{{ banner.title }}</div>
+            <div class="tp-sidebar-banner__title">{{ banner.sub_title }}</div>
+            <a href="{{ banner.button_link }}" class="tp-btn tp-btn--red tp-btn--shadow tp-btn--full margin-70t"><i class="fa fa-search"></i> {{ banner.button_text }}</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

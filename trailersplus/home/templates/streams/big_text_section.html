@@ -1,0 +1,12 @@
+{% load wagtailcore_tags common_tags %}
+<section class="tp-section bg-grey">
+    <div class="container">
+        <div class="tp-banner--sm t-center z-index">
+            <h2 class="h2">{{ self.text_block_top |locations_count:location_count| safe }}</h2>
+            <div class="color-grey">
+                <p>{{ self.text_block_top_subtext| safe }}</p>
+                <p><small>{{ self.text_block_bottom_subtext| safe }}</small></p>
+            </div>
+        </div>
+    </div>
+</section>

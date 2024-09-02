@@ -1,0 +1,33 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load static %}
+{% load product_tags %}
+<!-- Product СTA start -->
+<section class="padding-45t padding-45b padding-md-80t padding-md-80b bg-img">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 as image_webp %}
+        <img data-src="{{ image_webp.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="tp-product-cta container z-index t-center">
+        <h2 class="h2 title-w-block c-white">{{ self.title | safe }} <a href="tel:+1{{ store.store_phone }}" class="c-white d-inline-block">{{ store.store_phone }}</a></h2>
+        <div class="d-flex flex-wrap justify-content-center tp-2-btn margin-15t margin-md-40t">
+            <a href="/checkout" class="tp-btn tp-btn--padd-sm tp-btn--sm-fullwidth tp-btn--grey js-reserv-btn-3">{{ self.reserve_button_text }}</a>
+            <div class="tp-btn__loader"></div>
+            <a href="#schedule" class="tp-btn tp-btn--padd-sm tp-btn--sm-fullwidth tp-btn--red js-popup">{{ self.schedule_button_text }}</a>
+        </div>
+        <div class="tp-product-cta__info margin-10t margin-md-15t">
+            {{ self.sub_title | safe }} <b>${{ product.common.calculated_cash_price|formula }}/mo</b>.
+        </div>
+        <div class="tp-product-cta__link margin-10t margin-md-40t">
+            <a href="{{ self.banner_link }}" class="tp-link--arrow tp-link--arrow-abs-2 tp-link--low"><span class="d-block d-md-inline">{{ self.banner_link_text_top|safe }}</span> <span class="d-inline-block">{{ self.banner_link_text_bot|safe }}</span></a>
+        </div>
+    </div>
+</section>
+<!-- Product СTA end -->

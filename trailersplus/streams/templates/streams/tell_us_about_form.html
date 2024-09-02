@@ -1,0 +1,63 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<!--<section class="tp-section tp-section--default bg-white-grey">
+<div class="container">
+    <div class="row t-center margin-50b">
+        <div class="col-12 col-lg-10 offset-lg-1 c-blue-dark">
+            <p>{{ page.form_description | safe }}</p>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-12 col-lg-8 offset-lg-2">
+        <form action="{% pageurl page %}" method="POST" class="tp-form tp-form--shadow tp-form--padding">
+            {% csrf_token %}
+            <div class="t-center h3 margin-20b">{{ page.form_title }}</div>
+            <div class="row t-center margin-20b">
+                <div class="col-12 col-lg-10 offset-lg-1">
+                    <p>{{ page.form_sub_title }}</p>
+                </div>
+            </div>
+            <div class="tp-form-double">
+                <div class="tp-form-control">
+                    {{ form.name }}
+                </div>
+                <div class="tp-form-control">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="tp-form-double">
+                <div class="tp-form-control">
+                    {{ form.phone }}
+                </div>
+                <div class="tp-form-control">
+                    {{ form.size }}
+                </div>
+            </div>
+            <div class="tp-form-control">
+                {{ form.describe }}
+            </div>
+            <div class="margin-30t t-center">
+                <button type="submit" class="tp-btn tp-btn--red tp-btn--large">{{ page.form_button_text }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</section>-->
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<h2>{{ value.form.title }}</h2>
+<form {% if form.is_multipart %} enctype="multipart/form-data"{% endif %} action="{{ value.form_action }}" method="post" novalidate>
+    {{ form.media }}
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}{{ hidden }}{% endfor %}
+    {% for field in form.visible_fields %}
+        {% include 'streamforms/partials/form_field.html' %}
+    {% endfor %}
+    <input type="submit" value="{{ value.form.submit_button_text }}">
+</form>

@@ -1,0 +1,48 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static common_tags %}
+<section class="tp-section tp-section--sizes bg-blue-l">
+    <div class="container">
+        <h2 class="h2 c-white t-center">{{ self.section_title }}</h2>
+        {% for item in self.items %}
+        <div class="tp-size-block {% if item.reverse_align %}tp-size-block--reverse{% endif %}" id="{{ item.block_id }}">
+            <div class="tp-size-block__left">
+                <div class="tp-size-block__img tp-size-block__img--lg">
+                    <div class="bg-img">
+                        <picture>
+                            {% image item.first_image width-500 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.first_image width-500 format-jpeg as image_jpeg %}
+                            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.first_image width-500 as img %}
+                            <img data-src="{{ img.url }}" alt="trailers size" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                </div>
+                <div class="tp-size-block__img tp-size-block__img--sm">
+                    <div class="bg-img">
+                        <picture>
+                            {% image item.second_image width-500 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.second_image width-500 format-jpeg as image_jpeg %}
+                            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.second_image width-500 as img %}
+                            <img data-src="{{ img.url }}" alt="trailers size" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                </div>
+            </div>
+            <div class="tp-size-block__right">
+                <h3 class="h3 c-main">{{ item.title }}</h3>
+                <div>
+                    <p>{{ item.description | safe }}</p>
+                </div>
+                <h4 class="h4 c-main margin-10b">{{ item.size_title }}</h4>
+                <div>
+                    <p>{{ item.size_description | safe }}</p>
+                </div>
+                <a href="{{ item.button_link|location_slug:request.location.slug }}" class="tp-btn tp-btn--red tp-btn--xxs margin-30t">{{ item.button_text }}</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

@@ -1,0 +1,24 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% for post in posts %}
+<div class="tp-post">
+    <div class="p-relative">
+        <a href="{{ post.url }}" class="tp-post__img-wrapper bg-img">
+            <picture>
+                {% image post.post_preview_image width-772 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image post.post_preview_image width-772 format-jpeg as image_jpeg %}
+                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image post.post_preview_image width-772 as img %}
+                <img data-src="{{ img.url }}" alt="{{ post.post_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+        </a>
+        <div class="tp-post__date">{{ post.post_date }}</div>
+    </div>
+    <div class="tp-post__content-wrapper">
+        <h4 class="h4 c-main"><a href="{{ post.url }}">{{ post.post_title }}</a></h4>
+        <p>{{ post.post_short_description | safe }}</p>
+        <a href="{{ post.url }}" class="tp-post__link">{{ self.read_more_button }}</a>
+    </div>
+</div>
+{% endfor %}

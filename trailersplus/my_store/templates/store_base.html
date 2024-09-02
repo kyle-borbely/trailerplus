@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+<div class="main-wrapp-inner">
+    {% for block in page.content %}
+        {% include_block block %}
+    {% endfor %}
+</div>
+    {% for schema in stores %}
+        {{ schema.schema_code|safe }}
+    {% endfor %}
+{% endblock content %}
+{% block script %}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxO2Bw0GxAbVKZrd5yYiKwS2iFVSHDkO8"></script>
+{% endblock %}

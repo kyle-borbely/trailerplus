@@ -1,0 +1,127 @@
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags menus_tags footer_tags common_tags %}
+{% get_menu "company" as column2 %}
+{% get_menu "our-locations-col1" as column3 %}
+{% get_menu "our-locations-col2" as column3_2 %}
+{% get_menu "shop-for" as column4 %}
+ <footer class="tp-footer">
+     <!-- Cookie Policy start -->
+    {% if policy != 'accept' %}
+     {% for cookie in footers %}
+     <div class="tp-cookie-policy" id="cookie-policy">
+         <div class="container">
+             <div class="tp-cookie-policy__wrapper">
+                 {{ cookie.cookie_popup | safe }}
+                 <a href="#" class="tp-btn tp-btn--red js-accept-btn">{{ cookie.cookie_popup_button_text }}</a>
+             </div>
+         </div>
+     </div>
+     {% endfor %}
+    {% endif %}
+     <!-- Cookie Policy end -->
+     <div class="container">
+         <div class="tp-footer__main">
+             {% for column1 in footers %}
+             <div class="tp-footer__info">
+                 <a href="/" class="d-block tp-logo">
+                    {% if column1.svg_logo is not None %}
+                        <img src="{{ column1.svg_logo.url }}" alt="TrailersPlus">
+                    {% else %}
+                        {% image column1.logo width-220 format-png as image_png %}
+                        <img src="{{ image_png.url }}" alt="TrailersPlus">
+                    {% endif %}
+                 </a>
+                 <p>{{ column1.top_text | locations_count:location_count | safe }}</p>
+                 <!-- TODO Add class 'active' to 'li' current menu item  -->
+                 <ul class="tp-contact">
+                     <li class="tp-contact__item">
+                         <i class="fa fa-map-marker"></i>
+                         <span>{{ column1.location | safe }}</span>
+                     </li>
+                     <li class="tp-contact__item">
+                         <i class="fa fa-phone"></i>
+                         <a href="tel:+1{{ column1.phone_number }}">{{ column1.phone_number }}</a>
+                     </li>
+                 </ul>
+                 <ul class="tp-footer__pay margin-20t">
+                     <li>
+                         {% image column1.visa_image width-220 as img %}
+                         <img data-src="{{ img.url }}" alt="{{ img.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                     </li>
+                     <li>
+                         {% image column1.mastercard_image width-220 as img %}
+                         <img data-src="{{ img.url }}" alt="{{ img.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                     </li>
+                     <li>
+                         {% image column1.american_image width-220 as img %}
+                         <img data-src="{{ img.url }}" alt="{{ img.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                     </li>
+                     <li>
+                         {% image column1.discover_image width-220 as img %}
+                         <img data-src="{{ img.url }}" alt="{{ img.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                     </li>
+                 </ul>
+             </div>
+             {% endfor %}
+             <!-- TODO Add class "active" to current menu item -->
+             <div class="tp-footer__menu">
+                 <div class="tp-footer-nav js-drop-wrapp">
+                     <div class="tp-footer-nav__head js-drop-toggle">
+                         <h3 class="h4 c-white">{{ column2.title }}</h3>
+                     </div>
+                     <div class="tp-footer-nav__list js-drop-content">
+                         <ul>
+                             {% for item in column2.menu_items.all %}
+                             <li class="{% if forloop.item %} active {% endif %}">
+                                 <a href="{{ item.link }}">{{ item.title | safe }}</a>
+                             </li>
+                             {% endfor %}
+                         </ul>
+                     </div>
+                 </div>
+                 <div class="tp-footer-nav js-drop-wrapp">
+                     <div class="tp-footer-nav__head js-drop-toggle">
+                         <h3 class="h4 c-white">{{ column3.title }}</h3>
+                     </div>
+                     <div class="tp-footer-nav__list js-drop-content">
+                         <div class="tp-footer-nav__double">
+                             <ul>
+                                 {% for item in column3.menu_items.all %}
+                                 <li><a href="{{ item.link }}">{{ item.title | safe }}</a></li>
+                                 {% endfor %}
+                             </ul>
+                             <ul>
+                                 {% for item in column3_2.menu_items.all %}
+                                 <li><a href="{{ item.link }}">{{ item.title | safe }}</a></li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="tp-footer-nav js-drop-wrapp">
+                     <div class="tp-footer-nav__head js-drop-toggle">
+                         <h3 class="h4 c-white">{{ column4.title }}</h3>
+                     </div>
+                     <div class="tp-footer-nav__list js-drop-content">
+                         <ul>
+                             {% for item in column4.menu_items.all %}
+                             <li><a href="{{ item.link|location_slug:request.location.slug }}">{{ item.title | safe }}</a></li>
+                             {% endfor %}
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         {% for column1 in footers %}
+         <p class="tp-footer__text padding-50t padding50-b t-center">
+             {{ column1.bottom_text }}
+         </p>
+         {% endfor %}
+     </div>
+     <div class="tp-footer__copy">
+         {% for column1 in footers %}
+         <div class="container t-center padding-20t padding-20b padding-md-30t padding-md-30b">
+             {{ column1.copyright_text}}
+         </div>
+         {% endfor %}
+     </div>
+ </footer>

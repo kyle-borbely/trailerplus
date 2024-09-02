@@ -1,0 +1,33 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section--default tp-banner tp-banner--bot tp-banner--logo tp-banner--overl-{{ self.overlay }} bg-img {% if self.bg_fill %}bg-img--fill{% endif %}">
+    <picture>
+            {% image self.background_image width-1920 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 as image_webp %}
+            <img data-src="{{ image_webp.url }}" alt="Enclosed Cargo Trailers/Custom Trailers" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </picture>
+    <div class="container c-white t-left">
+        <h1 class="h1 c-white margin-10t margin-0b br-lg ">{{ self.title }}</h1>
+        <div class="margin-5t">
+            <div class="tp-pagination tp-pagination--white">
+                <ul>
+                    <li>
+                        <a href="{{ request.scheme }}://{{ request.site_name }}">
+                            {{ self.breadcrumbs_first }}
+                        </a>
+                    </li>
+                    <li>
+                        {{ self.breadcrumbs_last }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

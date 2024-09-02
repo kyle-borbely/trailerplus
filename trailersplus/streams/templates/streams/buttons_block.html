@@ -1,0 +1,38 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static common_tags %}
+<section class="padding-50t padding-20b padding-md-85t padding-md-55b bg-img">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-webp as image_webp %}
+        <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image width-1920 as image_webp %}
+        <img data-src="{{ image_webp.url }}" alt="Enclosed Cargo Trailers/Custom Trailers" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container">
+        {% if self.title %}
+        <h2 class="c-white t-center">{{ self.title }}</h2>
+        {% endif %}
+        {% if self.section_description %}
+        <p class="c-white t-center">{{ self.section_description | safe }}</p>
+        {% endif %}
+        <div class="row margin-30t margin-md-50t js-inner-nav justify-content-center">
+            {% for btn in self.buttons %}
+            <div class="col-lg-6 margin-30b">
+                <a href="{{ btn.button_link|location_slug:request.location.slug }}" class="tp-btn tp-btn--full tp-btn--red tp-btn--xxs-2 tp-btn--shadow">{{ btn.button_title }}</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="tp-nav--inner-scroll tp-nav--buttons hide js-inner-scroll-nav">
+        {% for btn in self.buttons %}
+        <a href="{{ btn.button_link|location_slug:request.location.slug }}" class="tp-btn tp-btn--full tp-btn--red tp-btn--xxs-2 tp-btn--shadow">
+            <span>{{ btn.button_title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>

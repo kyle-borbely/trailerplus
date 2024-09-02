@@ -1,0 +1,89 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+{% load product_tags %}
+<!-- Category filter start -->
+<div class="padding-40t padding-20b padding-md-75t padding-md-25b bg-grey">
+    <div class="container p-relative z-index">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="tp-s-filter tp-s-filter--category tp-skew tp-skew--blue-l tp-skew--border tp-skew--shadow">
+                    <form action="#" class="tp-s-filter__form">
+                        <div class="tp-s-filter__options">
+                            <div class="tp-s-filter__item tp-s-filter__item--type">
+                                <span class="tp-s-filter__item-label t-uppercase h4">{{ self.category_title }}</span>
+                                <select name="trailer-type" id="js-trailers-type-category">
+                                    {% for category, main_info in  categories_count %}
+                                        {% for sub_category_dict in main_info.sub %}
+                                            {% for sub_category, info in sub_category_dict.items %}
+                                                <option value="{{ request.scheme }}://{{ request.site_name }}/{{ store_slug }}/{{ info.slug }}/" {% if info.slug == category_slug %}selected{% endif %}>{{ info.verbose|translate|title }} ({{ info.count }})</option>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="tp-s-filter__item tp-s-filter__item--store">
+                                <span class="tp-s-filter__item-label t-uppercase h4">{{ self.sort_by_title}}</span>
+                                <select name="trailer-type" id="js-sorting">
+                                    <option value="price-to-high">{{ self.price_l_t_h}}</option>
+                                    <option value="price-to-low">{{ self.price_h_t_l}}</option>
+                                    <option value="size-to-large">{{ self.size_l_t_h}}</option>
+                                    <option value="size-to-small">{{ self.size_h_t_l}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Product Recently start -->
+        <div class="padding-45t padding-md-60t js-category-items-wrapper">
+            <div class="row justify-content-lg-center justify-content-xl-start">
+                {% for product in products.queryset %}
+                <div class="col-md-6 col-lg-4 col-xl-3 margin-30b margin-md-60b ">
+                    <a href="{{ request.path }}trailer/{{ product.trailer.vin }}/" class="tp-product" data-price="{{ product.trailer.sale_price }}" data-length="{{ product.trailer.length }}">
+                        <div class="tp-product__image">
+                            <div class="tp-swiper tp-swiper--product js-swiper">
+                                <div class="tp-swiper__container swiper-container" data-slides="1" data-loop="true" data-speed="500">
+                                    <div class="swiper-wrapper tp-swiper__wrapper">
+                                        {% for picture in product.trailer.pictures %}
+                                        <div class="swiper-slide tp-swiper__slide bg-img">
+                                            <picture>
+                                                <!--<source data-srcset="./img/webp/products/product1.webp" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                                                <!--<source data-srcset="./img/products/product1.jpg" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                                                <img data-src="{{ products.image_path }}/{{ picture.file }}" alt="Factory Direct" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                            </picture>
+                                        </div>
+                                        {% empty %}
+                                            <div class="swiper-slide tp-swiper__slide bg-img">
+                                                <picture>
+                                                    <img data-src="{{ products.image_path }}/comingsoon.jpg" alt="Factory Direct" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                                </picture>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="swiper-button-prev tp-swiper__prev"></div>
+                                    <div class="swiper-button-next tp-swiper__next"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tp-product__info">
+                            {% if product.trailer.status == 150 %}
+                                <span class="tp-product__status">{{ self.sold_label }}</span>
+                            {% endif %}
+                            {% if product.trailer.status == 120 %}
+                                <span class="tp-product__status">{{ self.reserved_label }}</span>
+                            {% endif %}
+                            <h3 class="h5 margin-0t margin-0b c-main">{{ product.title }}</h3>
+                            <!-- TODO If product has MSRP price need to add span(after span with price) with class "old" <span class="old">MSRP: $7999</span> -->
+                            <div class="tp-product__price">
+                                {{ self.sale_price }} <span>{% if product.trailer.status == 150 %}SOLD{% else %}{{ product.trailer.sale_price|str_price }}{% endif %}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Category filter end -->

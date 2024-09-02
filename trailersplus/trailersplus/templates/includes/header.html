@@ -1,0 +1,216 @@
+{% load static wagtailuserbar wagtailcore_tags wagtailimages_tags menus_tags i18n %}
+{% load wagtail_modeltranslation %}
+{% load menu_tags %}
+{% load header_tags %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+    <!-- HEADER START -->
+        <header class="tp-header js-header">
+            <div class="tp-header__box d-flex">
+                <div class="tp-header__left">
+                    <!-- Logo start -->
+                    <div class="tp-logo">
+                        <a href="{{ request.scheme }}://{{ request.site_name }}/" class="d-block">
+                            {% for text in headers %}
+                                {% if text.svg_logo is not None %}
+                                    <img src="{{ text.svg_logo.url }}" alt="TrailersPlus">
+                                {% else %}
+                                    {% image text.logo width-220 format-png as image_png %}
+                                    <img src="{{ image_png.url }}" alt="TrailersPlus">
+                                {% endif %}
+                            {% endfor %}
+                        </a>
+                    </div>
+                    <!-- Logo end -->
+                </div>
+                <div class="tp-header__right">
+                    <div class="tp-header__right-top">
+                        <!-- Mobile logo start -->
+                        <div class="tp-logo tp-logo--laptop">
+                            <a href="{{ request.scheme }}://{{ request.site_name }}/">
+                            {% for text in headers %}
+                                {% if text.svg_logo is not None %}
+                                    <img src="{{ text.svg_logo.url }}" alt="TrailersPlus">
+                                {% else %}
+                                    {% image text.logo width-220 format-png as image_png %}
+                                    <img src="{{ image_png.url }}" alt="Trailers Plus">
+                                {% endif %}
+                            {% endfor %}
+                            </a>
+                        </div>
+                        <!-- Mobile logo end -->
+                        <div class="tp-header__topbar tp-skew tp-skew--header">
+                            <!-- Language switcher start -->
+                            <div class="tp-lang tp-dropdown tp-dropdown--lang js-dropdown">
+                                <div class="tp-skew tp-skew--header tp-skew--absolute tp-skew--blue-d"></div>
+                                <div class="tp-lang__head tp-dropdown__head">
+                                    {% if LANGUAGE_CODE == 'es'  %}
+                                    <img src="{% static 'img/icons/esp.png' %}" alt="Español">
+                                    {% endif %}
+                                    {% if LANGUAGE_CODE == 'en'  %}
+                                    <img src="{% static 'img/icons/eng.png' %}" alt="English">
+                                    {% endif %}
+                                    <span>{{ LANGUAGE_CODE }}</span>
+                                </div>
+                                <div class="tp-dropdown__list">
+                                    <ul>
+                                        <li class="">
+                                            <a href="{{ request.scheme }}://{{ request.site_name }}/{{ translation_path.en|default:request.path|with_locale:'en' }}" class="tp-lang__link d-flex align-items-center js-lang-link" data-lang="en">
+                                                <img src="{% static 'img/icons/eng.png' %}" alt="English">
+                                                English
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ request.scheme }}://{{ request.site_name }}/{{ translation_path.es|default:request.path|with_locale:'es' }}" class="tp-lang__link d-flex align-items-center js-lang-link" data-lang="es">
+                                                <img src="{% static 'img/icons/esp.png' %}" alt="Español">
+                                                Español
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Language switcher end -->
+                            <!-- Location dropdown start -->
+                            <div class="tp-header__store tp-dropdown js-dropdown">
+                                <div class="tp-dropdown__head t-uppercase">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                    {% for text in headers %}
+                                    <span class="label d-none d-lg-inline">{{ text.location_icon_text }}</span>
+                                    {% if store is not None %}
+                                    <a href="{{ request.scheme }}://{{ request.site_name }}/{{ store.get_slug }}/" class="d-none d-md-inline">{{ store.get_city_name }}, {{ store.state }}</a>
+                                    {% else %}
+                                    <a href="{{ request.scheme }}://{{ request.site_name }}/{{ request.location.slug }}/" class="d-none d-md-inline">{{ request.location.city_name }}, {{ request.location.state }}</a>
+                                    {% endif %}
+                                    <span class="d-md-none">{{ text.location_icon_mobile_text }}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class="tp-dropdown__list tp-dropdown__list--smaller">
+                                    <div class="tp-dropdown__cta d-md-none">
+                                    {% if store is not None %}
+                                        <a href="{{ request.scheme }}://{{ request.site_name }}/{{ store.get_slug }}/" class="h4 c-main">{{ store.get_city_name }}, {{ store.state }}</a>
+                                        <a href="{{ store.store_map_url }}" class="tp-btn tp-btn--sm tp-btn--red margin-15t"><i class="fa fa-map-marker" aria-hidden="true"></i>{% for text in headers %}{{ text.go_to_google_maps }}{% endfor %}</a>
+                                    {% else %}
+                                        <a href="{{ request.scheme }}://{{ request.site_name }}/{{ request.location.slug }}/" class="h4 c-main">{{ request.location.city_name }}, {{ request.location.state }}</a>
+                                        <a href="{{ request.location.map_url }}" class="tp-btn tp-btn--sm tp-btn--red margin-15t"><i class="fa fa-map-marker" aria-hidden="true"></i>{% for text in headers %}{{ text.go_to_google_maps }}{% endfor %}</a>
+                                    {% endif %}
+                                    </div>
+                                    <!-- TODO Add class 'active' to 'li' current item  -->
+                                    <ul class="tp-locations">
+                                        {% for state, stores in locations %}
+                                        <li class="tp-locations__item js-drop-wrapp">
+                                            <div class="tp-locations__head js-drop-toggle">
+                                                {{ state }}
+                                            </div>
+                                            <div class="tp-locations__body js-drop-content">
+                                                <ul class="tp-locations__cities">
+                                                    {% for selected_store in stores %}
+                                                        {% if store is not None %}
+                                                            <li class="js-locations-city {% if selected_store.id == store.store_id %} active {% endif %}" data-locations-city="{{ selected_store.id }}" data-store-slug="{{ selected_store.slug }}"><i class="fa fa-map-marker"></i><span>{{ selected_store.city_name }}, {{ selected_store.state }}</span></li>
+                                                        {% else %}
+                                                            <li class="js-locations-city {% if selected_store.id == request.location.id %} active {% endif %}" data-locations-city="{{ selected_store.id }}" ><i class="fa fa-map-marker"></i><span>{{ selected_store.city_name }}, {{ selected_store.state }}</span></li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Location dropdown end -->
+                            <!-- Header phone start -->
+                            <div class="tp-header__phone">
+                                {% if store is not None %}
+                                    <a href="tel:+1{{ store.store_phone }}" class="t-uppercase">
+                                {% else %}
+                                    <a href="tel:+1{{ request.location.phone }}" class="t-uppercase">
+                                {% endif %}
+                                    <i class="fa fa-phone"></i>
+                                    {% for text in headers %}
+                                        {% if store is not None %}
+                                            <span class="label d-none d-lg-inline">{{ text.phone_icon_text }}</span> <span>{{ store.store_phone }}</span>
+                                        {% else %}
+                                            <span class="label d-none d-lg-inline">{{ text.phone_icon_text }}</span> <span>{{ request.location.phone }}</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </a>
+                            </div>
+                            <!-- Header phone end -->
+                        </div>
+                    </div>
+                    <div class="tp-header__right-bottom">
+                        <div class="tp-logo tp-logo--mobile">
+                            <a href="{{ request.scheme }}://{{ request.site_name }}/">
+                            {% for text in headers %}
+                                {% if text.svg_logo is not None %}
+                                    <img src="{{ text.svg_logo.url }}" alt="TrailersPlus">
+                                {% else %}
+                                    {% image text.logo width-220 format-png as image_png %}
+                                    <img src="{{ image_png.url }}" alt="TrailersPlus">
+                                {% endif %}
+                            {% endfor %}
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <!-- Main navigation start -->
+                            {% for menu in main_menus.0.menus %}
+                                {{ menu }}
+                            {% endfor %}
+                            <!-- Main navigation end -->
+                            <!-- Cart start -->
+                            <!-- TODO Add class 'open' for opening cart -->
+                            <!-- TODO Add class 'added' for show message about adding -->
+                            <div class="tp-cart added js-cart {% if cart_popup_trailer is not None %}tp-cart--visible{% endif %}">
+                                <a href="#" class="tp-cart__icon js-cart-toggle">
+                                    <i class="ion-md-cart"></i>
+                                    <span class="tp-cart__count">1</span>
+                                </a>
+                                <div class="tp-cart__dropdown">
+                                    {% for text in headers %}
+                                    <div class="tp-cart__info title">{{ text.cart_title }}</div>
+                                    <div class="tp-cart__info success title">{% if cart_popup_trailer is not None %}{{ text.cart_title }}{% else %}{{ text.item_added_text}}{% endif %}</div>
+                                    <div class="tp-cart__list">
+                                        <a href="{{ request.scheme }}://{{ request.site_name }}/{{cart_popup_trailer.link}}" class="tp-cart__item">
+                                            <div class="tp-cart__item-img">
+                                                <img src="{{ cart_popup_trailer.image }}" alt="cart product">
+                                            </div>
+                                            <div class="tp-cart__item-info">
+                                                <h5 class="h5 tp-cart__item-title c-white">{{ cart_popup_trailer.title }}</h5>
+                                                <div class="tp-cart__item-subtitle">{{ cart_popup_trailer.store }}</div>
+                                                <div class="tp-cart__item-price">${{ cart_popup_trailer.price }}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="tp-cart__buttons d-flex">
+                                        <a href="#" class="tp-btn tp-btn--grey tp-btn--grey-red js-remove-from-cart tp-btn--sm-fullwidth"><span>{{ text.remove_button }}</span><div class="tp-btn__loader"></div></a>
+                                        <a href="{{ request.scheme }}://{{ request.site_name }}/checkout/" class="tp-btn tp-btn--red tp-btn--sm-fullwidth"><span>{{ text.checkout_button }}</span><div class="tp-btn__loader"></div></a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!-- Cart end -->
+                            <!-- Navbar toggle start -->
+                            <button class="tp-header__toggle js-nav-toggle" aria-label="Navbar toggle">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <!-- Navbar toggle end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="tp-nav tp-nav--main tp-nav--scroll js-scroll-nav">
+                <ul class="tp-nav__list">
+                    <!-- TODO Need to add class 'parent-active' to first-level li, if li has active item in submenu -->
+                    {% for menu in main_menus.0.menus %}
+                        {{ menu }}
+                    {% endfor %}
+                </ul>
+                <!-- TODO Add class 'open' for opening cart -->
+                <!-- TODO Add class 'added' for show message about adding -->
+            </nav>
+        </header>
+        <!-- HEADER END -->

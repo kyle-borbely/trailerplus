@@ -1,0 +1,19 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="tp-section tp-section--limited-width bg-white-grey">
+                <div class="container">
+                    <h2 class="h2 c-main t-center">{{ self.title }}</h2>
+                    <ul class="tp-check-list">
+                        {% for o in self.list_items %}
+                        <li>{{ o.item_text }}</li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tp-btn-wrapper d-flex margin-50t d-flex flex-column flex-md-row justify-content-center align-items-center">
+                        {% for btn in self.buttons %}
+                        <a href="{{ btn.button_link }}" class="tp-btn tp-btn--red tp-btn--medium-max tp-btn--icon tp-btn--shadow">
+                            <i class="{{ btn.button_icon }}"></i>
+                            {{ btn.button_title }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>

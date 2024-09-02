@@ -1,0 +1,31 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section bg-grey">
+    <div class="container margin-25b margin-md-65b">
+        <h2 class="h2 c-main w-full t-center">{{ self.title }}</h2>
+    </div>
+    <div class="tp-swiper tp-swiper--recent js-swiper tp-swiper--fleet">
+        <div class="tp-swiper__container swiper-container" data-slides="3" data-slides_sm="2" data-simulate_touch="true" data-loop="true" data-centeredSlides="true" data-speed="700" data-spaces="30" data-spaces_md="0">
+            <div class="swiper-wrapper tp-swiper__wrapper">
+                {% for item in self.items %}
+                <div class="swiper-slide tp-swiper__slide">
+                    <div class="tp-swiper__image bg-img">
+                        <picture>
+                            {% image item.item_image width-575 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.item_image width-575 format-jpeg as image_jpeg %}
+                            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.item_image width-575 as img %}
+                            <img data-src="{{ img.url }}" alt="Factory Direct" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                    <p>{{ item.item_text }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination tp-swiper__pagination"></div>
+            <div class="swiper-button-prev tp-swiper__prev"></div>
+            <div class="swiper-button-next tp-swiper__next"></div>
+        </div>
+    </div>
+</section>

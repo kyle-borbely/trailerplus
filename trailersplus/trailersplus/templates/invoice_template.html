@@ -1,0 +1,361 @@
+{% load static %}
+{% load checkout_tags %}
+<!DOCTYPE html>
+<html lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Enclosed Cargo Trailers and Utility Trailers for Sale - TrailersPlus.com</title>
+    <meta name="description"
+          content="">
+    <meta name="keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+    <link href="{% static 'css/invoice.min.css' %}" rel="stylesheet">
+    <style>
+    button:disabled {
+        cursor: not-allowed;
+        pointer-events: all !important;
+        }
+    .errorlist {
+        color: red;
+    }
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+    </style>
+
+</head>
+<body>
+    
+
+
+
+<div class="wrapper" id="">
+
+</div>
+<div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="Google Services"
+                                  src="https://www.googleadservices.com/pagead/conversion/1059865073/?label=1ZJ9CN_1pgIQ8YOx-QM&amp;guid=ON&amp;script=0"/>
+</div>
+
+<div class="invoice">
+    <div class="container">
+        <div class="invoice-header">
+            <img src="https://www.trailersplus.com/static/images/trailersplus.png" width="61" height="61" alt="Trailersplus">
+            <span>TRAILERS PLUS</span>
+            <button class="make-payment-button" onclick="$('#paymentModal').addClass('show').show();$('body').append('<div class=\'modal-backdrop show\'></div>');" {% if not limits.max %}disabled{% endif %}>MAKE A PAYMENT</button>
+        </div>
+
+        <div class="invoice-body">
+            <div class="row">
+                <div class="invoice-messages alert alert-danger" id="invoice_messages">{{ additional.error }}</div>
+            </div>
+            <div class="row">
+                <div class="invoice-title">INVOICE</div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="name" id="customer-name">{{ invoice.customer_data.0.invoice_name }}</p>
+                    <p class="address" id="customer-address">{{ invoice.customer_data.0.line1 }}</p>
+                    <p class="address2" id="customer-address2">{{ invoice.customer_data.0.city }}, {{ invoice.customer_data.0.state_short }}</p>
+                    <p class="address3" id="customer-address3">{{ invoice.customer_data.0.postal_code }}</p>
+
+                    <p class="phone" id="customer-phone">{{ invoice.customer_data.0.phone_number }}</p>
+                    <p class="email" id="customer-email">{{ invoice.customer_data.0.email_address }}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="invoice-number">Invoice No: <span id="invoice-number">{{ invoice.StoreID }}-{{ invoice.InvoiceNumber }}</span></p>
+                    <p class="invoice-date">Date: <span id="invoice-date">{{ invoice.CreateDate|timestamp_to_date }}</span></p>
+
+                    <p class="totalDue">Total Due</p>
+                    <p class="totalAmount" id="totalAmount">${{ invoice.InvoiceValue }}</p>
+                </div>
+            </div>
+
+            <div class="invoice-section">
+                <table class="table table-items">
+                    <tbody id="tbody">
+                        <tr>
+                            <th>DESCRIPTION</th>
+                            <th style="text-align: center;">QTY</th>
+                            <th>UNIT COST</th>
+                            <th>EXTENDED COST</th>
+                        </tr>
+                        {% for line in invoice.lines %}
+                            {% if line.PartNumber != 'SALESTAX'  and line.PartNumber != 'NOTE'%}
+                                <tr>
+                                    <th>{{ line.Description }}</th>
+                                    <th style="text-align: center;">{{ line.QtyOrdered }}</th>
+                                    <th>${{ line.UnitCost }}</th>
+                                    <th>${{ line.ExtendedCost }}</th>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="invoice-section">
+                <table class="table table-totals">
+                    <tr>
+                        <td>Subtotal</td>
+                        <td class="subtotal" id="subtotal">${{ subTotal }}</td>
+                    </tr>
+                    {% for line in invoice.lines %}
+                        {% if line.PartNumber == 'SALESTAX' %}
+                        <tr>
+                            <td>Sales Tax</td>
+                            <td class="salestax" id="salestax">${{ line.ExtendedCost }}</td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td>Payments</td>
+                        <td class="payments" id="payments">${{ Collected|default:0.00 }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="invoice-section">
+                <table class="table table-balance">
+                    <tr>
+                        <td>Balance</td>
+                        <td class="balance" id="balance">${{ balance }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <center class="invoice-footer">
+            <center><button class="make-payment-button visible-xs" onclick="$('#paymentModal').addClass('show').show();$('body').append('<div class=\'modal-backdrop show\'></div>');" {% if not limits.max %}disabled{% endif %}>MAKE A PAYMENT</button></center>
+            <div>
+                AGREEMENT Delivery and Payment. Delivery of parts or vehicles is to be taken within 14 days of their arrival at Seller's location or the date of this invoice whichever is later. Failure to do so shall be a breach of this agreement, and the seller may retain as liquidated damages therefore the cash and all other considerations paid by purchaser. Seller receives checks and drafts, given in whole or in part payment, conditionally only. Seller reserves title to the vehicle until the check or draft is paid by the bank on which drawn. Seller does not guarantee the delivery dates of any vehicles, products, or services. By signing this form, the Buyer hereby waives the right to later dispute authorized charges made on a credit card used as payment on this invoice. Any payments on quotes that include labor or welding charges are not refundable under any circumstances. All sales are final. There are no refunds or cancellations. Arbitration and Waiver of Jury Trial. All irresolvable disputes or claims pertaining to the vehicles, products, or services delivered by the Seller to the Buyer or the relationships that arise there from, whether based in contract, tort or otherwise, shall be resolved by binding arbitration under the expedited procedures of the Commercial Disputes Arbitration Rules of the American Arbitration Association (AAA) and the Federal Arbitration Act in Title 9 of the US Code and the laws of the State of Idaho. Arbitration hearings will be held in the city where the Seller is located or where mutually agreed. A single arbitrator will be appointed by the AAA and will be an attorney or a retired judge with experience and knowledge in commercial transactions. Judgment upon the award rendered in arbitration shall be final and may be entered in any court, state or federal, having jurisdiction. Buyer and Seller mutually agree that in the arbitration process, that attorneys fees shall not be awarded by an arbitrator under this agreement. The arbitrator shall not award attorneys fees under this agreement which expressly declines the arbitrators authority under Idaho Code Section 7-910. IF A DISPUTE OR CLAIM IS NOT SUBJECT TO ARBITRATION FOR ANY REASON, THEN THE DISPUTE OR CLAIM SHALL BE DECIDED IN A COURT OF COMPETENT JURISDICTION WITHOUT A JURY. YOU AND WE IRREVOCABLY WAIVE ALL RIGHTS TO TRIAL BY JURY. Seller's Liability. Seller's liability for any and all claims arising out of this agreement will be limited to the total value of the vehicles, products, or services delivered under this agreement. Under no circumstances shall the Seller be liable to the Buyer or any other person for any special, incidental or consequential damages Complete Agreement. This document represents the entire agreement between the Buyer and the Seller. All promises, verbal understandings, or agreements of any kind pertaining to this purchase not specified herein are not binding on the Seller. Warranty. Warranty on trailers varies by make and model. Please refer to the warranty information in your sales packet. Service work performed by TrailersPlus employees is guaranteed against defect in workmanship for a period of 30 days from purchase. Quotes may not include any applicable taxes, documentation or title fees, tire fees and/or any other recommended accessories. I, the purchaser, state that I am over eighteen years of age and have the legal right to transact business. Buyer acknowledges the receipt of a copy of this Agreement.
+            </div>
+            <br>
+            <div>
+                Thank you for your business!
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="paymentModal" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p class="title"> Pay Invoice</p>
+                <form class="paymentInfo" method="post" action="" autocomplete="off">
+                    {% csrf_token %}
+                    <input type="hidden" id="customer_zip">
+                    <input type="hidden" id="customer_fullname">
+                    <div class="messages" id="messages">
+
+                    </div>
+                    <div>
+                        {{ form.non_field_errors }}
+                    </div>
+                    <div>
+                        {{ form.card_num.errors }}
+                        {{ form.card_num.label_tag }}
+                        {{ form.card_num }}
+                    </div>
+                    <div>
+                        {{ form.card_exp.errors }} {{ form.card_code.errors }}
+                        <div class="col-sm-7">
+                            <div>
+                                {{ form.card_exp.label_tag }}
+                            </div>
+                            {{ form.card_exp }}
+                        </div>
+                        <div class="col-sm-5">
+                            <div>
+                                {{ form.card_code.label_tag }}
+                            </div>
+                            {{ form.card_code }}
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-12">
+                            {{ form.policy.errors }}
+                            {{ form.policy }} I accept the <a href="/returns-policy/" target="_blank">return/refund policy</a>
+                        </div>
+                    </div>
+                    <div>
+                        {{ form.payment_type.errors }}
+                    </div>
+                    <div>
+                        {{ form.payment_type }}
+                    </div>
+                    <div class="partialvalue" id="partialvalue">
+                        {{ form.partial_value.errors }}
+                        <div>
+                            {{form.partial_value.label_tag}}
+                        </div>
+                        <input type="number" min={{ limits.min }} max={{ limits.max }} class="form-control" name="partial_value" id="id_partial_value" aria-describedby="amountHelp" aria-label="ammountHelp">
+                        <small id="amountHelp" class="form-text text-muted pull-right" aria-label="Amount Help"></small>
+                    </div>
+                    <div>
+                        <input type="submit" class="btn btn-default"  value="PAY NOW">
+                    </div>
+                    <button type="button" class="btn-close" data-dismiss="modal" onclick="closePopup()">CLOSE</button>
+                    <center><img src="{% static '/img/ajax-loader2.gif' %}" class="loader"></center>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="paymentModal2" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <i class="fa fa-check-circle"></i>
+                <p class="title"> Payment Received</p>
+                <p>Your payment of <span id="paid"></span> has been received successfully.</p>
+                <p class="thankyou">Thank you.</p>
+                <button type="button" class="btn-close" data-dismiss="modal" onclick="closePopup()">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+    <script>
+    let $ = jQuery;
+    function closePopup(){
+        if ($(".modal.show").length) {
+            $("body").removeClass('modal-open')
+            $(".modal").removeClass('show');
+            $(".modal").hide();
+            $("body").removeAttr( 'style' );
+            $(".modal-backdrop").remove();
+        }
+    }
+    function maximumAmountClick(){
+        $("#amountHelp").hide();
+        $(".partialvalue").hide();
+    }
+    function partialAmountClick(){
+        $("#amountHelp").text("Min: $"+"{{ limits.min }}"+", Max: $"+"{{ limits.max }}");
+        $("#amountHelp").show();
+        $(".partialvalue").show();
+    }
+    {% if additional.success == True %}
+        $(window).on('load', function() {
+        $('#paymentModal2').modal('show');
+    });
+    {% endif %}
+    {% if additional.success == False %}
+        {% if additional.invalid_form == True %}
+            $(window).on('load', function() {
+            $('#paymentModal').modal('show')});
+        {% else %}
+            $(window).on('load', function() {
+            $('#invoice_messages').css('display', 'block')});
+        {% endif %}
+    {% endif %}
+    let ccNumberInput = document.querySelector("#id_card_num"),
+	ccNumberPattern = /^\d{0,16}$/g,
+	ccNumberSeparator = " ",
+	ccNumberInputOldValue,
+	ccNumberInputOldCursor,
+	ccExpiryInput = document.querySelector("#id_card_exp"),
+	ccExpiryPattern = /^\d{0,4}$/g,
+	ccExpirySeparator = "/",
+	ccExpiryInputOldValue,
+	ccExpiryInputOldCursor,
+	ccCVCInput = document.querySelector("#id_card_code"),
+	ccCVCPattern = /^\d{0,3}$/g,
+	mask = (value, limit, separator) => {
+		var output = [];
+		for (let i = 0; i < value.length; i++) {
+			if (i !== 0 && i % limit === 0) {
+				output.push(separator);
+			}
+
+			output.push(value[i]);
+		}
+
+		return output.join("");
+	},
+	unmask = (value) => value.replace(/[^\d]/g, ""),
+	checkSeparator = (position, interval) => Math.floor(position / (interval + 1)),
+	ccNumberInputKeyDownHandler = (e) => {
+		let el = e.target;
+		ccNumberInputOldValue = el.value;
+		ccNumberInputOldCursor = el.selectionEnd;
+	},
+	ccNumberInputInputHandler = (e) => {
+		let el = e.target,
+			newValue = unmask(el.value),
+			newCursorPosition;
+
+		if (newValue.match(ccNumberPattern)) {
+			newValue = mask(newValue, 4, ccNumberSeparator);
+
+			newCursorPosition =
+				ccNumberInputOldCursor -
+				checkSeparator(ccNumberInputOldCursor, 4) +
+				checkSeparator(
+					ccNumberInputOldCursor + (newValue.length - ccNumberInputOldValue.length),
+					4
+				) +
+				(unmask(newValue).length - unmask(ccNumberInputOldValue).length);
+
+			el.value = newValue !== "" ? newValue : "";
+		} else {
+			el.value = ccNumberInputOldValue;
+			newCursorPosition = ccNumberInputOldCursor;
+		}
+
+		el.setSelectionRange(newCursorPosition, newCursorPosition);
+
+	},
+	ccExpiryInputKeyDownHandler = (e) => {
+		let el = e.target;
+		ccExpiryInputOldValue = el.value;
+		ccExpiryInputOldCursor = el.selectionEnd;
+	},
+	ccExpiryInputInputHandler = (e) => {
+		let el = e.target,
+			newValue = el.value;
+
+		newValue = unmask(newValue);
+		if (newValue.match(ccExpiryPattern)) {
+			newValue = mask(newValue, 2, ccExpirySeparator);
+			el.value = newValue;
+		} else {
+			el.value = ccExpiryInputOldValue;
+		}
+	};
+
+ccNumberInput.addEventListener("keydown", ccNumberInputKeyDownHandler);
+ccNumberInput.addEventListener("input", ccNumberInputInputHandler);
+
+ccExpiryInput.addEventListener("keydown", ccExpiryInputKeyDownHandler);
+ccExpiryInput.addEventListener("input", ccExpiryInputInputHandler);
+
+{% if limits.max == limits.min %}
+    $(window).on('load', function() {
+    $('#partial_amount_radio').css('display', 'none')});
+{% endif %}
+
+    $(window).on('load', function() {
+        let label = $('#max_amount_radio').find('label')[0];
+        let previous_text = label.innerText;
+        label.innerText = previous_text + " (${{ limits.max }})";
+    });
+</script>
+</body>
+</html>

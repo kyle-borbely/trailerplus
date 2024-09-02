@@ -1,0 +1,40 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static common_tags %}
+<section class="padding-50b padding-md-85b tp-offer-trailers">
+    <div class="container c-blue-dark">
+        <h2 class="h4 c-main w-full t-center margin-10b">{{ self.title | locations_count:location_count }}</h2>
+        <h2 class="h2 c-main w-full t-center margin-0t margin-md-20t">{{ self.sub_title | safe }}</h2>
+        {% for item in self.items %}
+        <div class="tp-offer-trailers__row">
+            <div class="tp-offer-trailers__col">
+                <div class="tp-offer-trailers__img-place">
+                    <div class="tp-offer-trailers__img-wrapper bg-img">
+                        <picture>
+                            {% image item.image width-600 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-600 format-png as image_png %}
+                            <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-600 as img %}
+                            <img data-src="{{ img.url }}" alt="models we offer" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                </div>
+            </div>
+            <div class="tp-offer-trailers__col">
+                <div class="tp-offer-trailers__description">
+                    <h3 class="h3 margin-10b">{{ item.title }}</h3>
+                    <p class="margin-0b margin-0t">{{ item.textarea | safe }}</p>
+                    <div class="tp-offer-trailers__btn-wrapper margin-35t margin-md-45t">
+                        {% if item.view_button_text %}
+                        <a href="{{ item.view_button_link|location_slug:request.location.slug }}" class="tp-btn tp-btn--red tp-offer-trailers__btn">{{ item.view_button_text | safe }}</a>
+                        {% endif %}
+                        {% if item.information_button_text %}
+                        <a href="{{ item.information_button_link }}" class="tp-btn tp-btn--grey tp-offer-trailers__btn">{{ item.information_button_text | safe }}</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

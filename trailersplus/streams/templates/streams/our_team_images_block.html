@@ -1,0 +1,50 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section tp-our-team">
+    <div class="container">
+        <div class="margin-30b margin-md-70b">
+            <h2 class="h2 c-main w-full t-center">{{ self.title }}</h2>
+            <p>{{ self.sub_title | safe }}</p>
+        </div>
+        {% for block in self.right_block %}
+        <div class="row margin-60b">
+            <div class="col-sm-12 col-md-5 offset-md-1 margin-30b margin-md-0b">
+                <picture>
+                    {% image block.image width-470 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image block.image width-470 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image block.image width-470 as img %}
+                    <img data-src="{{ img.url }}" alt="our team" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+            </div>
+            <div class="col-sm-12 col-md-5">
+                <div class="tp-our-team__text-wrapper c-blue-dark">
+                    <h3 class="h3 c-main">{{ block.title }}</h3>
+                    <p>{{ block.textarea | safe }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% for block in self.left_block %}
+        <div class="row">
+            <div class="col-sm-12 col-md-5 offset-md-1 order-2 order-md-1">
+                <div class="tp-our-team__text-wrapper c-blue-dark">
+                    <h3 class="h3 c-main">{{ block.title }}</h3>
+                    <p>{{ block.textarea | safe }}</p>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-5 order-1 order-md-2 margin-30b margin-md-0b">
+                <picture>
+                    {% image block.image width-470 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image block.image width-470 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image block.image width-470 as img %}
+                    <img data-src="{{ img.url }}" alt="our team" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>

@@ -1,0 +1,17 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<div class="container c-blue-dark">
+    <div class="row">
+        <div class="col-12 col-md-10 offset-md-1 tp-blog-details__content">
+            <picture>
+                {% image self.single_image width-996 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image self.single_image width-996 format-jpeg as image_jpeg %}
+                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image self.single_image width-996 as img %}
+                <img data-src="{{ img.url }}" alt="{{ self.single_image_alt }}" class="lazyload tp-img--shadow" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+        </div>
+    </div>
+</div>

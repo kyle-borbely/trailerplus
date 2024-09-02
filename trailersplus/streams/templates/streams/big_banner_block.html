@@ -1,0 +1,37 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="p-relative">
+    <div class="tp-section--default tp-banner tp-banner--bot tp-banner--600 tp-banner--overl-3 tp-banner--width-1100 bg-img">
+        <picture>
+            {% image self.background_image width-1920 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 as image_webp %}
+            <img data-src="{{ image_webp.url }}" alt="{{ image_webp.alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </picture>
+        <div class="container c-white t-center">
+            <h1 class="h1 c-white margin-10t margin-0b br-lg ">{{ self.title }}</h1>
+            <p class="c-white margin-20t br-sm">{{ self.text }}</p>
+        </div>
+    </div>
+    <div class="tp-banner__buttons-wrapper">
+        {% for button in self.buttons %}
+        <a href="{{ button.button_link }}" {% if button.open_in_new_tab %} target="_blank" {% endif %} class="tp-btn tp-btn--red tp-btn--shadow">
+            <picture>
+                {% image button.button_icon width-30 format-webp as image_webp %}
+                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image button.button_icon width-30 format-png as image_png %}
+                <source data-srcset="{{ image_png.url }}" type="image/png" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                {% image button.button_icon width-30 format-webp as image_webp %}
+                <img data-src="{{ image_webp.url }}" alt="store" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            </picture>
+            <span>{{ button.button_title }}</span>
+        </a>
+        {% endfor %}
+    </div>
+</section>

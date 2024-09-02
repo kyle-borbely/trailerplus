@@ -1,0 +1,30 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+    <section>
+        <div class="tp-swiper tp-swiper--main tp-swiper--shadow tp-swiper--bg-absolute js-swiper">
+            <div class="swiper-container tp-swiper__container" data-slides="1" data-speed="1000" data-autoplay="4000" data-loop="true">
+                <div class="swiper-wrapper tp-swiper__wrapper">
+                    {% for slider in self.slides %}
+                    <div class="swiper-slide tp-swiper__slide">
+                        <picture>
+                            {% image slider.image width-1680 format-webp as img %}
+                            <source data-srcset="{{ img.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image slider.image width-1680 format-jpeg as img %}
+                            <source data-srcset="{{ img.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            <img data-src="{{ img.url }}" alt="{{ slider.image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                        <div class="tp-swiper__content">
+                            <h1 class="h1 c-white">
+                                {{ slider.text | safe }}
+                            </h1>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination tp-swiper__pagination tp-swiper__pagination--light margin-10b margin-sm-20b"></div>
+                <div class="swiper-button-prev tp-swiper__prev"></div>
+                <div class="swiper-button-next tp-swiper__next"></div>
+            </div>
+        </div>
+    </section>
+    {% include 'includes/search.html' %}

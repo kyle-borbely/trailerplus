@@ -1,0 +1,33 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<!-- Banner start -->
+<section class="padding-50b padding-md-75t padding-md-80b tp-banner tp-banner--bot tp-banner--600 tp-banner--overl-5 bg-img {% if message is not None%}tp-banner--with-message"{% endif %}>
+    <picture>
+            {% image self.background_image width-1920 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 as image_webp %}
+            <img data-src="{{ image_webp.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    {% if message is not None%}
+        <!-- Warning Message BEGIN -->
+        <div class="margin-40b margin-md-20b">
+            <div class="tp-warning-message container">
+                <div class="tp-warning-message__wrapper">
+                    <p>{{ message.text }}</p>
+                </div>
+            </div>
+        </div>
+        <!-- Warning Message END -->
+    {% endif %}
+    <div class="container c-white t-left">
+        <h1 class="h1 c-white margin-10t margin-0b br-lg ">{{ store.store_name }}</h1>
+        <p class="c-white margin-20t br-sm">{{ self.description }}</p>
+    </div>
+</section>
+<!-- Banner end -->

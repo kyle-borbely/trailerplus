@@ -1,0 +1,23 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<!-- One-Stop start -->
+<section class="padding-45t padding-20b padding-md-75t padding-md-15b">
+    <div class="container">
+        <h2 class="h2 t-center margin-30b margin-md-70b">{{ self.title }}</h2>
+        <div class="row">
+            {% for bullet in self.bullets %}
+            <div class="col-md-6 margin-25b margin-md-65b">
+                <div class="tp-store-serv">
+                    <div class="tp-store-serv__title">
+                        {% image bullet.icon format-jpeg as icon%}
+                        <img data-src="{{ icon.url }}" alt="{{ bullet.icon_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        <h3 class="h4 margin-0t">{{ bullet.title }}</h3>
+                    </div>
+                    <p class="p-md">{{ bullet.text }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- One-Stop end -->

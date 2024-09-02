@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="padding-50t padding-md-85t padding-45b padding-md-75b">
+    <div class="container js-tabs">
+        <div class="tp-parts-tabs">
+            <!-- Tabs -->
+            <div class="tp-parts-tabs__tabs">
+                {% for tab in self.tabs %}
+                <div class="tp-parts-tabs__tab js-tab {% if forloop.first %}active{% endif %}">
+                    <a href="" class="js-tab-link">{{ tab.tab_title }}</a>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="tp-parts-tabs__content">
+                {% for o in self.tabs %}
+                <div class="tp-tabs__box tp-parts-tabs__box js-tab-box {% if forloop.first %}active{% endif %}">
+                    {% for ii in o.items %}
+                    <a href="{{ ii.link_url }}" class="tp-box-item" target="_blank">
+                        <div class="tp-box-item__content-wrapper">
+                            <div class="tp-box-item__img-wrapper">
+                                <picture>
+                                    {% image ii.image width-100 format-webp as image_webp %}
+                                    <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                    {% image ii.image width-100 format-jpeg as image_jpeg %}
+                                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                    {% image ii.image width-100 format-webp as image_webp %}
+                                    <img data-src="{{ image_webp.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                </picture>
+                            </div>
+                            <h3>{{ ii.title }}</h3>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

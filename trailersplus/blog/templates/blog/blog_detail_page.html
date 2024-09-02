@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+
+{% block content %}
+<div class="main-wrapp-inner">
+    <section class="tp-section--default tp-banner tp-banner--bot tp-banner--600 tp-banner--overl-{{ self.post_main_image_overlay }} bg-img">
+        <picture>
+            {% image self.post_main_image width-1900 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.post_main_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.post_main_image width-1900 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.post_main_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.post_main_image width-1900 as img %}
+            <img data-src="{{ img.url }}" alt="{{ self.post_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        </picture>
+        <div class="container c-white t-center">
+            <h1 class="h2 c-white">{{ self.post_title }}</h1>
+            <p class="c-white margin-20t br-sm">{{ self.post_date }}</p>
+        </div>
+    </section>
+    {% for block in page.content %}
+    {% include_block block %}
+    {% endfor %}
+</div>
+{% endblock content %}

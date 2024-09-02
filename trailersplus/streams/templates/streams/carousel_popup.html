@@ -1,0 +1,78 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section bg-porcelain">
+    <div class="container">
+        <h2 class="h2 w-full t-center margin-25b margin-md-65b">{{ self.title }}</h2>
+        <div class="tp-swiper js-swiper tp-swiper--popular p-relative">
+            <div class="tp-swiper__container swiper-container" data-slides="4" data-slides_lg="3" data-slides_md="2" data-slides_sm="1" data-speed="700" data-spaces="30" data-loop="true" data-autoplay="4000" data-simulate_touch="true">
+                <div class="swiper-wrapper tp-swiper__wrapper">
+                    {% for part in self.parts %}
+                    <a href="#parts-{{ part.popup_id }}" class="swiper-slide tp-swiper__slide js-popup">
+                        <div class="tp-swiper__slide-wrapper">
+                            <picture>
+                                {% image part.main_image width-575 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image part.main_image width-575 format-jpeg as image_jpeg %}
+                                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image part.main_image width-575 format-webp as image_webp %}
+                                <img data-src="{{ image_webp.url }}" alt="These are our most popular parts packages" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            </picture>
+                            <h3 class="h4 c-main margin-0t padding-20t padding-20b lh24 fz20">{{ part.title }}</h3>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="swiper-pagination tp-swiper__pagination"></div>
+            <div class="swiper-button-prev tp-swiper__prev"></div>
+            <div class="swiper-button-next tp-swiper__next"></div>
+        </div>
+    </div>
+</section>
+{% for o in self.parts %}
+ <div class="white-popup tp-popup tp-popup--popular-parts mfp-hide" id="parts-{{ o.popup_id }}">
+     <div class="tp-popup__body-clear">
+         <div class="tp-popup__row">
+             <!-- Slider -->
+             <div class="tp-popup__col">
+                 <!-- Slider Container -->
+                 <div class="tp-swiper js-swiper  p-relative">
+                     <div class="tp-swiper__container swiper-container" data-slides="1" data-speed="700" data-loop="true" data-observe-parents="true" data-simulate_touch="true">
+                         <div class="swiper-wrapper tp-swiper__wrapper">
+                             {% for ii in o.gallery_images %}
+                             <div class="swiper-slide tp-swiper__slide p-relative bg-img">
+                                 <picture>
+                                     {% image ii.image width-575 format-webp as image_webp %}
+                                     <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                     {% image ii.image width-575 format-jpeg as image_jpeg %}
+                                     <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                     {% image ii.image width-575 as img %}
+                                     <img data-src="{{ img.url }}" alt="These are our most popular parts packages" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                 </picture>
+                             </div>
+                             {% endfor %}
+                         </div>
+                     </div>
+                     <!-- Slider Navigation -->
+                     <div class="swiper-pagination tp-swiper__pagination"></div>
+                     <div class="swiper-button-prev tp-swiper__prev"></div>
+                     <div class="swiper-button-next tp-swiper__next"></div>
+                 </div>
+             </div>
+             <!-- Content -->
+             <div class="tp-popup__col">
+                 <h3 class="h3">{{ o.title }}</h3>
+                 <div class="h4 c-alter fw500 margin-20b">{{ o.price }}</div>
+                 <div class="c-blue-dark fz15 lh26 margin-25b">
+                     <p>{{ o.description | safe }}</p>
+                 </div>
+                 <ul class="tp-check-list">
+                     {% for ii in o.options %}
+                     <li>{{ ii.option | safe }}</li>
+                     {% endfor %}
+                 </ul>
+             </div>
+         </div>
+     </div>
+ </div>
+{% endfor %}

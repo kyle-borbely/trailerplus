@@ -1,0 +1,41 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section">
+    <div class="container margin-30b margin-md-70b">
+        <h2 id="{{ self.block_id }}" class="h2 c-main w-full t-center">{{ self.title }}</h2>
+    </div>
+    <div class="container">
+        <div class="tp-about-columns  tp-about-columns--large-img">
+            {% for item in self.items %}
+            <div class="tp-about-columns__col">
+                <div class="tp-about-columns__img bg-img">
+                    <picture>
+                        {% image item.image width-500 format-webp as image_webp %}
+                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.image width-500 format-jpeg as image_jpeg %}
+                        <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image item.image width-500 as img %}
+                        <img data-src="{{ img.url }}" alt="item" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </div>
+                <h4 class="h4 c-main">{{ item.caption }}</h4>
+                {% if item.sub_caption %}
+                <div class="tp-about-columns__text">
+                    {{ item.sub_caption }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% if self.text %}
+            <div class="container">
+                <h3 class="h2 c-main w-full t-center">{{ self.text | safe }}</h3>
+            </div>
+            {% endif %}
+            {% if self.scroll_button %}
+            <div class="w-full t-center margin-50b margin-md-85b">
+                <a href="{{ self.scroll_button_link }}" class="tp-btn tp-btn--red">{{ self.scroll_button_text }}</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>

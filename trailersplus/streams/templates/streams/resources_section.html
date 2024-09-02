@@ -1,0 +1,31 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+<section class="padding-45t padding-20b padding-md-20t padding-md-20b tp-resources">
+    <div class="container">
+        <h1 class="h2 c-main margin-25b margin-md-60b tp-ls-small">{{ self.title }}</h1>
+        <div class="row">
+            {% for item in self.items %}
+            <div class="col-12 col-lg-6 margin-50b margin-md-70b">
+                <div class="tp-resources__item">
+                    <div class="tp-resources__img">
+                        <picture>
+                            {% image item.image width-170 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-170 format-png as image_png %}
+                            <source data-srcset="{{ image_png.url }}" type="image/png" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-170 as img %}
+                            <img data-src="{{ img.url }}" alt="models we offer" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                    <div class="tp-resources__desc">
+                        <div class="tp-resources__desc-wrap">
+                            <h2 class="h4 c-main margin-15b">{{ item.title }}</h2>
+                            <p>{{ item.textarea | safe }}</p>
+                        </div>
+                        <a href="{{ item.button_link }}" class="tp-btn tp-btn--red tp-btn--small margin-30t">{{ item.button_text }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+{% block content %}
+<div class="main-wrapp-inner">
+            <!-- MAIN CONTENT START -->
+            <section class="tp-not-found bg-img">
+                <picture>
+                    {% image settings.site_settings.ErrorPage404.background_image width-1980 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image settings.site_settings.ErrorPage404.background_image_mobile width-450 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image settings.site_settings.ErrorPage404.background_image width-1980 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image settings.site_settings.ErrorPage404.background_image_mobile width-450 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image settings.site_settings.ErrorPage404.background_image width-1980 as image_webp %}
+                    <img data-src="{{ image_webp.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+                <div class="container t-center">
+                    <h1 class="c-white">{{ settings.site_settings.ErrorPage404.title }}</h1>
+                    <h2 class="h3 c-white">{{ settings.site_settings.ErrorPage404.sub_title }}</h2>
+                    <h3 class="c-white">{{ settings.site_settings.ErrorPage404.textarea | safe }}</h3>
+                    <a href="{{ settings.site_settings.ErrorPage404.button_page.url }}" class="tp-btn tp-btn--red margin-30t"><i class="fa fa-home" aria-hidden="true"></i> {{ settings.site_settings.ErrorPage404.button_text }}</a>
+                </div>
+            </section>
+            <!-- Join community start
+            <section class="tp-section tp-section--sm bg-img">
+                <picture>
+                    <source data-srcset="./img/webp/join-bg-min.webp" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    <source data-srcset="./img/webp/join-bg-mob-min.webp" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    <source data-srcset="./img/join-bg-min.jpg" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    <source data-srcset="./img/join-bg-mob-min.jpg" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    <img data-src="./img/join-bg-min.jpg" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="t-center-sm">
+                                <h2 class="h2 c-white">Join The TrailersPlus Community</h2>
+                                <span class="h4 c-white d-block p-0-30-xs">Stay Up to Date With the Latest and Greatest</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-end margin-35t margin-md-0t">
+                            <ul class="tp-social">
+                                <li>
+                                    <a href="https://www.facebook.com/TrailersPlus" target="_blank" rel="noopener" aria-label="facebook"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/trailersplus/" target="_blank" rel="noopener" aria-label="instagram"><i class="fa fa-instagram"></i></a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/user/TrailersPlus1" target="_blank" rel="noopener" aria-label="youtube"><i class="fa fa-youtube-play"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+</div>-->
+{% endblock %}

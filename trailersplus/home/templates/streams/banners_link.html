@@ -1,0 +1,35 @@
+{% load wagtailcore_tags wagtailimages_tags common_tags%}
+<section class="tp-section tp-section--padd-normal">
+    <div class="container">
+        <div class="tp-img-links">
+            <a href="{{ self.left_banner_link_url }}" class="tp-img-links__left bg-img">
+                <picture>
+                    {% image self.image_left_banner width-650 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.image_left_banner width-650 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.image_left_banner width-650 as img %}
+                    <img data-src="{{ img.url }}" alt="{{ self.background_image_alt_left }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+                <div class="tp-img-links__title c-white--all">
+                    <h3 class="h3 margin-5b">{{ self.title_left_banner | safe }}</h3>
+                    <span class="h5 tp-link tp-link--arrow tp-img-links__link">{{ self.sub_title_left_banner | safe }}</span>
+                </div>
+            </a>
+            <a href="{{ self.right_banner_link_url }}" class="tp-img-links__right bg-img">
+                <picture>
+                    {% image self.image_right_banner width-650 format-webp as image_webp %}
+                    <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.image_right_banner width-650 format-jpeg as image_jpeg %}
+                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.image_right_banner width-650 as img %}
+                    <img data-src="{{ img.url }}" alt="{{ self.background_image_alt_right }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+                <div class="tp-img-links__title c-white--all">
+                    <h3 class="h3 margin-5b">{{ self.title_right_banner |locations_count:location_count| safe }}</h3>
+                    <span class="h5 tp-link tp-link--arrow tp-img-links__link">{{ self.sub_title_right_banner | safe }}</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>

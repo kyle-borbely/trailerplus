@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags common_tags %}
+
+{% block content %}
+<div class="main-wrapp-inner">
+    <section class="tp-section">
+        <div class="container">
+            <h1 class="h1 c-main">{{ page.custom_title }}</h1>
+            <div class="tp-divider margin-50b"></div>
+            <div class="row">
+                <!-- Content start -->
+                <div class="col-12 col-xl-8">
+                    <!-- Post start -->
+                    <div id="posts-container" data-max-pages="3" data-current-page="1">
+                    {% for post in posts %}
+                    <div class="tp-post">
+                        <div class="p-relative">
+                            <a href="{{ post.url }}" class="tp-post__img-wrapper bg-img">
+                                <picture>
+                                    {% image post.post_preview_image width-772 format-webp as image_webp %}
+                                    <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                    {% image post.post_preview_image width-772 format-jpeg as image_jpeg %}
+                                    <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                    {% image post.post_preview_image width-772 as img %}
+                                    <img data-src="{{ img.url }}" alt="{{ post.post_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                </picture>
+                            </a>
+                            <div class="tp-post__date">{{ post.post_date }}</div>
+                        </div>
+                        <div class="tp-post__content-wrapper">
+                            <h4 class="h4 c-main"><a href="{{ post.url }}">{{ post.post_title }}</a></h4>
+                            <p>{{ post.post_short_description | safe }}</p>
+                            <a href="{{ post.url }}" class="tp-post__link">{{ self.read_more_button }}</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <!-- Post end -->
+                    <!-- Load More Button -->
+                    {% if posts.has_next %}
+                    <div class="t-center margin-30t margin-md-70t">
+                        <a href="" class="tp-btn tp-btn--grey" id="load-more-posts">{{ self.load_more_button }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col-12 col-xl-4">
+                    {% for banner in self.rightside_banner.all %}
+                    <div class="tp-sidebar-banner__wrapper tp-sidebar-banner__wrapper--right margin-50t margin-xl-0t">
+                        <div class="tp-sidebar-banner bg-img">
+                            <picture>
+                                {% image banner.image width-350 format-webp as image_webp %}
+                                <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image banner.image width-350 format-jpeg as image_jpeg %}
+                                <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                                {% image banner.image width-350 as img %}
+                                <img data-src="{{ img.url }}" alt="{{ banner.image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            </picture>
+                            <div class="tp-sidebar-banner__subtitle">{{ banner.title }}</div>
+                            <div class="tp-sidebar-banner__title">{{ banner.sub_title }}</div>
+                            <a href="{% if banner.button_link is not None %}{{ banner.button_link|location_slug:request.location.slug }}{% else %}{{ banner.button_page_link.url }}{% endif %}" class="tp-btn tp-btn--red tp-btn--shadow tp-btn--full margin-70t"><i class="fa fa-search"></i> {{ banner.button_text }}</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% for block in page.content %}
+    {% include_block block %}
+    {% endfor %}
+</div>
+{% endblock content %}

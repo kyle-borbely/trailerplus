@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  db:
+    image: library/postgres:latest
+    restart: always
+    volumes:
+      - ./docker_postgres.sh:/docker-entrypoint-initdb.d/z_docker_postgres.sh
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+
+  redis:
+    image: library/redis:latest
+    restart: always
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", $REDIS_PASSWORD]
+    ports:
+    - 6379:6379
+    volumes:
+      - redis_data:/data
+    env_file:
+      - .env
+
+  memcache:
+    image: library/memcached:latest
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    restart: always
+    volumes:
+      - pgAdmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    ports:
+      - 16543:80
+    env_file:
+      - .env
+
+  web:
+    image: registry.gitlab.com/upqode-wp/trailersplus-backend:latest
+    restart: always
+    command: ["pipenv", "run", "gunicorn", "trailersplus.wsgi:application", "--bind", "0000:8888"]
+    ports:
+      - 80:8888
+    depends_on:
+      - db
+      - redis
+      - memcache
+
+  celery:
+    image: registry.gitlab.com/upqode-wp/trailersplus-backend:latest
+    restart: always
+    command: ["pipenv", "run", "celery", "-A", "trailersplus", "worker", "-B", "-l", "INFO"]
+
+    depends_on:
+      - web
+      - redis
+
+  flower:
+    image: registry.gitlab.com/upqode-wp/trailersplus-backend:latest
+    restart: always
+    command: ["pipenv", "run", "celery", "flower", "-A", "trailersplus", "-B", "-l", "INFO"]
+    ports:
+    - 5555:5555
+    depends_on:
+      - celery
+
+# Save redis, postgres and pgAdmin states
+volumes:
+  redis_data:
+  postgres_data:
+  pgAdmin_data:

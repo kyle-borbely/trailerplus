@@ -1,0 +1,60 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="bg-grey padding-45t padding-md-65t">
+    <div class="container-fluid bg-grey">
+        <div class="tp-nav tp-nav--inner js-inner-nav">
+            <ul class="tp-nav__list">
+                {% for nav in self.navigation %}
+                <li>
+                    <a href="{{ nav.link }}">{{ nav.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="bg-grey tp-nav tp-nav--inner tp-nav--inner-scroll hide js-inner-scroll-nav">
+        <ul class="tp-nav__list">
+            {% for nav in self.navigation %}
+                <li>
+                    <a href="{{ nav.link }}">{{ nav.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+<!-- Inner navigation end -->
+<!-- Services start -->
+<section class="padding-50t padding-md-85t padding-md-15b padding-lg-35b">
+    <div class="container">
+        {% for item in self.items %}
+        <div id="{{ item.block_id }}" class="tp-service {% if item.reverse %}tp-service--reverse{% endif %} margin-45b margin-md-65b margin-lg-75b">
+            <div class="tp-service__left">
+                <div class="p-relative">
+                    <div class="tp-service__img tp-shadow-grey bg-img">
+                        <picture>
+                            {% image item.image width-430 format-webp as image_webp %}
+                            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-430 format-jpeg as image_jpeg %}
+                            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% image item.image width-430 as img %}
+                            <img data-src="{{ img.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        </picture>
+                    </div>
+                    <div class="tp-service__icon tp-skew tp-skew--shadow-grey">
+                        {% image item.icon width-70 format-png as image_png %}
+                        <img src="{{ image_png.url }}" alt="icon">
+                    </div>
+                </div>
+            </div>
+            <div class="tp-service__right margin-35t margin-md-55t margin-lg-0t">
+                <div>
+                    <h2 class="c-main h3 margin-10b">{{ item.title }}</h2>
+                    <h3 class="h4 fw400 c-main margin-15b margin-md-20b margin-0t">{{ item.sub_title }}</h3>
+                    <p class="c-blue-dark p-md">{{ item.textarea | safe }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{{ item.text_align }}

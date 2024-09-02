@@ -1,0 +1,22 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<section class="tp-not-found bg-img">
+    <picture>
+        {% image self.background_image format-webp as img %}
+        <source data-srcset="{{ img.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile format-webp as img %}
+        <source data-srcset="{{ img.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image_mobile format-jpeg as img %}
+        <source data-srcset="{{ img.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        {% image self.background_image format-jpeg as img %}
+        <source data-srcset="{{ img.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+        <img data-src="{{ img.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container t-center">
+        <h1 class="c-white">{{ self.title }}</h1>
+        <h2 class="h3 c-white">{{ self.sub_title }}</h2>
+        <h3 class="c-white">{{ self.textarea }}</h3>
+        <a href="{% if self.link %}{{ self.link }}{% elif self.link_page %}{{ self.link_page.url }}{% else %}{{ request.scheme }}://{{ request.site_name }}{% endif %}" class="tp-btn tp-btn--red margin-30t"><i class="fa fa-home" aria-hidden="true"></i>{{ self.button_text }}</a>
+    </div>
+</section>

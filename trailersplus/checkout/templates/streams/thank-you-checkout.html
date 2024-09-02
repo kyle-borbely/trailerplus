@@ -1,0 +1,56 @@
+{% load wagtailcore_tags wagtailimages_tags wagtailuserbar %}
+{% load static %}
+{% load product_tags checkout_tags common_tags %}
+
+<section class="tp-confirm tp-section bg-grey">
+    <div class="container">
+        <div class="tp-confirm__box">
+            <div class="tp-confirm__message">
+                <div class="tp-succes-icon margin-10t">
+                    <div class="fa fa-check"></div>
+                </div>
+                <h1 class="h2 tp-confirm__title">{{ self.reserved_message }}</h1>
+            </div>
+            <div class="tp-confirm__area margin-40t margin-md-55t">
+                <div class="tp-confirm-text tp-confirm-text--mr">
+                    <div class="tp-confirm-text__box">
+                        <h2 class="h4">{{ self.confirmation }} #{{ invoice.invoice_id }}</h2>
+                        <div>
+                            {{ invoice.date|one_more:cart_trailer.info.store.store_phone|one_more:invoice.customer_email|long_text_template:self.long_text|safe }}
+                        </div>
+                        <a href="{{ request.scheme }}://{{ request.site_name }}/{{ cart_trailer.info.store.get_slug }}/inventory/" class="tp-btn tp-btn--red margin-30t">{{ self.back_button}}</a>
+                    </div>
+                </div>
+                <div class="tp-confirm-product margin-50t margin-md-0t">
+                    <div class="tp-confirm-product__img bg-img">
+                        <picture>
+                            <!--<source data-srcset="./img/webp/product-single/img-1.webp" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                            <!--<source data-srcset="./img/product-single/img-1.jpg" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">-->
+                            {% with cart_trailer.info.pictures|first as image %}
+                            <img data-src="{{ cart_trailer.image_path }}/{{ image.file }}" alt="alt" class="lazyload js-print-img" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                            {% endwith %}
+                        </picture>
+                    </div>
+                    <div class="tp-confirm-product__body">
+                        <div class="tp-confirm-product__body-top">
+                            <a href="{{ request.scheme }}://{{ request.site_name }}/{{ cart_trailer.info.store.get_slug }}/{{ cart_trailer.info.category.slug }}/trailer/{{ cart_trailer.info.vin }}" class="h4 c-main margin-15b">{{ cart_trailer.title }}</a>
+                            <div class="tp-location-name margin-10t">
+                                <i class="fa fa-map-marker"></i>
+                                <span class="tp-location-name__title">{{ self.pickup }}:</span>
+                                <span class="tp-location-name__name">{{ cart_trailer.info.store.get_city_name}}, {{ cart_trailer.info.store.state }}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center margin-10t">
+                            <div class="tp-price tp-price--old">MSRP: {{ cart_trailer.info.msrp|str_price }}</div>
+                            <div class="tp-price fw500">{{ self.sale_price }}: <span>{{ cart_trailer.info.sale_price|str_price }}</span></div>
+                        </div>
+                        <div class="tp-confirm-product__add-text margin-10t">
+                            <p>{{ self.financing_available }} <b>${{ cart_trailer.info.calculated_cash_price|formula }}/mo.</b>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

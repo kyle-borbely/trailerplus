@@ -1,0 +1,32 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="tp-section bg-grey">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 t-center">
+                <h2 class="h2">{{ page.form_title }}</h2>
+                <p class="margin-30t">{{ page.form_sub_title }}</p>
+                <form action="{% pageurl page %}" method="POST" class="tp-form tp-form--shadow tp-form--padding margin-40t">
+                    {% csrf_token %}
+                    <div class="tp-form-triple">
+                        <div class="tp-form-control">
+                            {{ form.name }}
+                        </div>
+                        <div class="tp-form-control">
+                            {{ form.email }}
+                        </div>
+                        <div class="tp-form-control">
+                            {{ form.zipcode }}
+                        </div>
+                    </div>
+                    <div class="tp-form-control">
+                        {{ form.description }}
+                    </div>
+                    <div class="margin-30t">
+                        <button type="submit" class="tp-btn tp-btn--red tp-btn--large">{{ page.form_button_text }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

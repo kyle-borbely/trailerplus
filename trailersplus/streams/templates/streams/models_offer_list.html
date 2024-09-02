@@ -1,0 +1,37 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+<section class="padding-45t padding-5b padding-md-75t padding-15b bg-img">
+    <div class="container">
+        <div class="margin-30b margin-md-70b">
+            {% if self.main_title %}
+            <h2 id="{{ self.block_id }}" class="h2 t-center margin-40b margin-md-60b br-sm">{{ self.main_title }}</h2>
+            {% endif %}
+            {% if self.main_sub_title %}
+            <p>{{ self.main_sub_title | safe }}</p>
+            {% endif %}
+        </div>
+        <h3 class="h3 t-center margin-30b margin-md-60b">{{ self.title }}</h3>
+        <div class="row">
+            {% for o in self.models %}
+            <div class="col-md-6 col-xl-3 margin-30b margin-md-70b {% if o.opacity %}opacity-05{% endif %}">
+                <div class="tp-check-list-logo margin-20b margin-md-30b">
+                    <picture>
+                        {% image o.model_image width-250 format-webp as image_webp %}
+                        <source data-srcset="{{ image_webp.url }}" type="image/webp" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image o.model_image width-250 format-png as image_png %}
+                        <source data-srcset="{{ image_png.url }}" type="image/jpeg" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                        {% image o.model_image width-250 as img %}
+                        <img data-src="{{ img.url }}" alt="models we offer" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    </picture>
+                </div>
+                <p class="h4 c-main margin-md-30b">{{ o.model_title }}</p>
+                <ul class="tp-check-list tp-check-list--small">
+                    {% for ii in o.items %}
+                    <li>{{ ii.title }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

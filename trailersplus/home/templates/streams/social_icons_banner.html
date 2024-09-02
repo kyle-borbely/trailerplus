@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+    <section class="tp-section tp-section--sm bg-img">
+                <picture>
+                    {% image self.background_image_mobile width-450 as img %}
+                    <source data-srcset="{{ img.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                    {% image self.background_image width-1680 as img %}
+                    <img data-src="{{ img.url }}" alt="{{ self.background_image_alt }}" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+                </picture>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="t-center-sm">
+                                <h2 class="h2 c-white">{{ self.title }}</h2>
+                                <span class="h4 c-white d-block p-0-30-xs">{{ self.text }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center justify-content-center justify-content-md-end margin-35t margin-md-0t">
+                            <ul class="tp-social">
+                                {% if settings.site_settings.SocialMediaSettings.facebook %}
+                                <li>
+                                    <a href="{{ settings.site_settings.SocialMediaSettings.facebook }}" target="_blank" rel="noopener" aria-label="facebook"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                {% endif %}
+                                {% if settings.site_settings.SocialMediaSettings.instagram %}
+                                <li>
+                                    <a href="{{ settings.site_settings.SocialMediaSettings.instagram }}" target="_blank" rel="noopener" aria-label="instagram"><i class="fa fa-instagram"></i></a>
+                                </li>
+                                {% endif %}
+                                {% if settings.site_settings.SocialMediaSettings.youtube %}
+                                <li>
+                                    <a href="{{ settings.site_settings.SocialMediaSettings.youtube }}" target="_blank" rel="noopener" aria-label="youtube"><i class="fa fa-youtube-play"></i></a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>

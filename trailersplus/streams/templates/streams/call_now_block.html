@@ -1,0 +1,14 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+<section class="tp-section tp-section--default bg-blue-grey tp-b-inverse">
+    <div class="container t-center">
+        <h3 class="h4 c-main">{{ self.text }}</h3>
+        <h2 class="h2 c-main">{{ self.sub_text }}</h2>
+        <div class="h2">
+            <b>
+                <a href="tel:+1{{ self.phone }}">{{ self.phone }}</a>
+            </b>
+        </div>
+    </div>
+</section>

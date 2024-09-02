@@ -1,0 +1,30 @@
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static common_tags %}
+<!-- Banner start -->
+<section class="padding-40b padding-md-75t padding-md-80b tp-banner tp-banner--bot tp-banner--600 tp-banner--overl-4 bg-img">
+    <picture>
+        {% image self.background_image width-1920 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-webp as image_webp %}
+            <source data-srcset="{{ image_webp.url }}" type="image/webp" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(min-width: 451px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image_mobile width-450 format-jpeg as image_jpeg %}
+            <source data-srcset="{{ image_jpeg.url }}" type="image/jpeg" media="(max-width: 450px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+            {% image self.background_image width-1920 as image_webp %}
+            <img data-src="{{ image_webp.url }}" alt="alt" class="lazyload" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    </picture>
+    <div class="container c-white t-left">
+        <h1 class="h1 c-white margin-10t margin-0b br-lg ">{{ store.store_name|one_more:''|add_store:self.title_start }} <b>{{ self.guaranteed_translation }}</b></h1>
+        <div class="margin-25t">
+            <ul class="tp-check-list tp-check-list--space-20 tp-check-list--white-txt">
+                {% for bullet in self.bullets %}
+                <li>
+                    <strong>{{ bullet }}</strong>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Banner end -->
